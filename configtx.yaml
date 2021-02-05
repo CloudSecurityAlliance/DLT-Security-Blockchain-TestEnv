@@ -1,0 +1,257 @@
+Organizations:
+    - &orderer
+        Name: orderer
+        ID: orderer
+        MSPDir: crypto-config/ordererOrganizations/orderer/msp
+        Policies:
+            Readers:
+                Type: Signature
+                Rule: "OR('orderer.member')"
+            Writers:
+                Type: Signature
+                Rule: "OR('orderer.member')"
+            Admins:
+                Type: Signature
+                Rule: "OR('orderer.admin')"
+    - &regulator
+        Name: regulator
+        ID: regulator
+        MSPDir: crypto-config/peerOrganizations/regulator/msp
+        AnchorPeers:
+            - Host: peer0-regulator
+              Port: 7051
+        Policies:
+            Readers:
+                Type: Signature
+                Rule: "OR('regulator.member')"
+            Writers:
+                Type: Signature
+                Rule: "OR('regulator.member')"
+            Admins:
+                Type: Signature
+                Rule: "OR('regulator.admin')"
+            Endorsement:
+                Type: Signature
+                Rule: "OR('regulator.member')"
+    - &carrier
+        Name: carrier
+        ID: carrier
+        MSPDir: crypto-config/peerOrganizations/carrier/msp
+        AnchorPeers:
+            - Host: peer0-carrier
+              Port: 9051
+        Policies:
+            Readers:
+                Type: Signature
+                Rule: "OR('carrier.member')"
+            Writers:
+                Type: Signature
+                Rule: "OR('carrier.member')"
+            Admins:
+                Type: Signature
+                Rule: "OR('carrier.admin')"
+            Endorsement:
+                Type: Signature
+                Rule: "OR('carrier.member')"
+    - &importer-bank
+        Name: importer-bank
+        ID: importer-bank
+        MSPDir: crypto-config/peerOrganizations/importer-bank/msp
+        AnchorPeers:
+            - Host: peer0-importer-bank
+              Port: 11051
+        Policies:
+            Readers:
+                Type: Signature
+                Rule: "OR('importer-bank.member')"
+            Writers:
+                Type: Signature
+                Rule: "OR('importer-bank.member')"
+            Admins:
+                Type: Signature
+                Rule: "OR('importer-bank.admin')"
+            Endorsement:
+                Type: Signature
+                Rule: "OR('importer-bank.member')"
+    - &exporter-bank
+        Name: exporter-bank
+        ID: exporter-bank
+        MSPDir: crypto-config/peerOrganizations/exporter-bank/msp
+        AnchorPeers:
+            - Host: peer0-exporter-bank
+              Port: 13051
+        Policies:
+            Readers:
+                Type: Signature
+                Rule: "OR('exporter-bank.member')"
+            Writers:
+                Type: Signature
+                Rule: "OR('exporter-bank.member')"
+            Admins:
+                Type: Signature
+                Rule: "OR('exporter-bank.admin')"
+            Endorsement:
+                Type: Signature
+                Rule: "OR('exporter-bank.member')"
+    - &importer
+        Name: importer
+        ID: importer
+        MSPDir: crypto-config/peerOrganizations/importer/msp
+        AnchorPeers:
+            - Host: peer0-importer
+              Port: 15051
+        Policies:
+            Readers:
+                Type: Signature
+                Rule: "OR('importer.member')"
+            Writers:
+                Type: Signature
+                Rule: "OR('importer.member')"
+            Admins:
+                Type: Signature
+                Rule: "OR('importer.admin')"
+            Endorsement:
+                Type: Signature
+                Rule: "OR('importer.member')"
+    - &exporter
+        Name: exporter
+        ID: exporter
+        MSPDir: crypto-config/peerOrganizations/exporter/msp
+        AnchorPeers:
+            - Host: peer0-exporter
+              Port: 17051
+        Policies:
+            Readers:
+                Type: Signature
+                Rule: "OR('exporter.member')"
+            Writers:
+                Type: Signature
+                Rule: "OR('exporter.member')"
+            Admins:
+                Type: Signature
+                Rule: "OR('exporter.admin')"
+            Endorsement:
+                Type: Signature
+                Rule: "OR('exporter.member')"
+
+Capabilities:
+    Global: &ChannelCapabilities
+        V2_0: true
+    Orderer: &OrdererCapabilities
+        V2_0: true
+    Application: &ApplicationCapabilities
+        V2_0: true
+
+Application: &ApplicationDefaults
+    Organizations:
+    Policies:
+        Readers:
+            Type: ImplicitMeta
+            Rule: "ANY Readers"
+        Writers:
+            Type: ImplicitMeta
+            Rule: "ANY Writers"
+        Admins:
+            Type: ImplicitMeta
+            Rule: "MAJORITY Admins"
+        LifecycleEndorsement:
+            Type: ImplicitMeta
+            Rule: "ANY Endorsement"
+        Endorsement:
+            Type: ImplicitMeta
+            Rule: "ANY Endorsement"
+    Capabilities:
+        <<: *ApplicationCapabilities
+
+Orderer: &OrdererDefaults
+    OrdererType: etcdraft
+    EtcdRaft:
+        Consenters:
+            - Host: orderer0
+              Port: 7050
+              ClientTLSCert: crypto-config/ordererOrganizations/orderer/orderers/orderer0/tls/server.crt
+              ServerTLSCert: crypto-config/ordererOrganizations/orderer/orderers/orderer0/tls/server.crt
+            - Host: orderer1
+              Port: 7050
+              ClientTLSCert: crypto-config/ordererOrganizations/orderer/orderers/orderer1/tls/server.crt
+              ServerTLSCert: crypto-config/ordererOrganizations/orderer/orderers/orderer1/tls/server.crt
+            - Host: orderer2
+              Port: 7050
+              ClientTLSCert: crypto-config/ordererOrganizations/orderer/orderers/orderer2/tls/server.crt
+              ServerTLSCert: crypto-config/ordererOrganizations/orderer/orderers/orderer2/tls/server.crt
+    Addresses:
+        - orderer0:7050
+        - orderer1:7050
+        - orderer2:7050
+    BatchTimeout: 2s
+    BatchSize:
+        MaxMessageCount: 10
+        AbsoluteMaxBytes: 99 MB
+        PreferredMaxBytes: 512 KB
+    Kafka:
+        Brokers:
+            - 127.0.0.1:9092
+    Organizations:
+        - *orderer
+    Policies:
+        Readers:
+            Type: ImplicitMeta
+            Rule: "ANY Readers"
+        Writers:
+            Type: ImplicitMeta
+            Rule: "ANY Writers"
+        Admins:
+            Type: ImplicitMeta
+            Rule: "MAJORITY Admins"
+        BlockValidation:
+            Type: ImplicitMeta
+            Rule: "ANY Writers"
+
+Channel: &ChannelDefaults
+    Policies:
+        Readers:
+            Type: ImplicitMeta
+            Rule: "ANY Readers"
+        Writers:
+            Type: ImplicitMeta
+            Rule: "ANY Writers"
+        Admins:
+            Type: ImplicitMeta
+            Rule: "MAJORITY Admins"
+    Capabilities:
+        <<: *ChannelCapabilities
+
+Profiles:
+    OrdererGenesis:
+        <<: *ChannelDefaults
+        Capabilities:
+            <<: *ChannelCapabilities
+        Orderer:
+            <<: *OrdererDefaults
+            Organizations:
+                - *orderer
+            Capabilities:
+                <<: *OrdererCapabilities
+        Consortiums:
+            MAIN:
+                Organizations:
+                    - *regulator
+                    - *carrier
+                    - *importer-bank
+                    - *exporter-bank
+                    - *importer
+                    - *exporter
+    MainChannel:
+        Consortium: MAIN
+        <<: *ChannelDefaults
+        Application:
+            <<: *ApplicationDefaults
+            Organizations:
+                - *regulator
+                - *carrier
+                - *importer-bank
+                - *exporter-bank
+                - *importer
+                - *exporter
+            Capabilities:
+                <<: *ApplicationCapabilities

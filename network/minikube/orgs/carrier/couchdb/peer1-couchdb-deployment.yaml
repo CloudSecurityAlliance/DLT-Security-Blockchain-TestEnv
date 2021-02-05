@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: peer1-carrier-couchdb-deployment
+  labels: {
+    component: peer1,
+    type: couchdb,
+    org: carrier
+  }
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: peer1
+      type: couchdb
+      org: carrier
+  template:
+    metadata:
+      labels:
+        component: peer1
+        type: couchdb
+        org: carrier
+    spec:
+      volumes:
+        - name: my-pv-storage
+          persistentVolumeClaim:
+            claimName: my-pv-claim
+      containers:
+        - name: peer1-carrier-couchdb
+          image: couchdb:3.1.1
+          env:
+            - name: COUCHDB_USER
+              value: appbootup
+            - name: COUCHDB_PASSWORD
+              value: "1234"
+          volumeMounts:
+            - mountPath: /opt/couchdb/data
+              name: my-pv-storage
+              subPath: state/carrier/peers/peer1-couchdb

@@ -1,0 +1,157 @@
+name: "default-svc-cluster-local-network"
+
+version: 2.2.1
+
+client:
+
+  organization: regulator
+
+  logging:
+    level: info
+  
+  cryptoconfig:
+    path: /crypto-config
+
+  # Some SDKs support pluggable KV stores, the properties under "credentialStore"
+  # are implementation specific
+  credentialStore:
+    # [Optional]. Used by user store. Not needed if all credentials are embedded in configuration
+    # and enrollments are performed elsewhere.
+    path: "/tmp/state-store"
+
+    # [Optional]. Specific to the CryptoSuite implementation used by GO SDK. Software-based implementations
+    # requiring a key store. PKCS#11 based implementations does not.
+    cryptoStore:
+      # Specific to the underlying KeyValueStore that backs the crypto key store.
+      path: /tmp/msp
+
+  BCCSP:
+    security:
+      enabled: true
+      default:
+        provider: "SW"
+      hashAlgorithm: "SHA2"
+      softVerify: true
+      level: 256
+  
+  tlsCerts:
+    systemCertPool: true
+
+channels:
+
+  mainchannel:
+
+    peers:
+      peer0-regulator:
+        endorsingPeer: true
+        chaincodeQuery: true
+        ledgerQuery: true
+        eventSource: true
+  
+    policies:
+      queryChannelConfig:
+        minResponses: 1
+        maxTargets: 1
+        retryOpts:
+          attempts: 5
+          initialBackoff: 1000ms
+          maxBackoff: 10s
+          backoffFactor: 2.0
+
+organizations:
+  regulator:
+    mspid: regulator
+    cryptopath: peerOrganizations/regulator/users/Admin@regulator/msp
+    peers:
+      - peer0-regulator
+      - peer1-regulator
+
+orderers:
+  _default:
+    grpcOptions:
+      keep-alive-time: 0s
+      keep-alive-timeout: 20s
+      keep-alive-permit: false
+      fail-fast: false
+      allow-insecure: false
+  
+  orderer0:
+    grpcOptions:
+      ssl-target-name-override: orderer0
+      grpc-max-send-message-length: 15
+    
+    tlsCACerts:
+      path: /crypto-config/ordererOrganizations/orderer/msp/tlscacerts/orderers-ca-7054.pem
+
+  
+  orderer1:
+    grpcOptions:
+      ssl-target-name-override: orderer1
+      grpc-max-send-message-length: 15
+    
+    tlsCACerts:
+      path: /crypto-config/ordererOrganizations/orderer/msp/tlscacerts/orderers-ca-7054.pem
+
+  
+  orderer2:
+    grpcOptions:
+      ssl-target-name-override: orderer2
+      grpc-max-send-message-length: 15
+    
+    tlsCACerts:
+      path: /crypto-config/ordererOrganizations/orderer/msp/tlscacerts/orderers-ca-7054.pem
+
+peers:
+
+  _default:
+    grpcOptions:
+      keep-alive-time: 1s
+      keep-alive-timeout: 20s
+      keep-alive-permit: false
+      fail-fast: false
+      allow-insecure: false
+    
+  peer0-regulator:
+    grpcOptions:
+      ssl-target-name-override: peer0-regulator
+      grpc.http2.keepalive_time: 15
+    
+    tlsCACerts:
+      path: /crypto-config/peerOrganizations/regulator/msp/tlscacerts/regulator-ca-7054.pem
+
+  peer1-regulator:
+    grpcOptions:
+      ssl-target-name-override: peer1-regulator
+      grpc.http2.keepalive_time: 15
+    
+    tlsCACerts:
+      path: /crypto-config/peerOrganizations/regulator/msp/tlscacerts/regulator-ca-7054.pem
+
+entityMatchers:
+
+  peer:
+    - pattern: (\w*)peer0-regulator(\w*)
+      urlSubstitutionExp: peer0-regulator:7051
+      sslTargetOverrideUrlSubstitutionExp: peer0-regulator
+      mappedHost: peer0-regulator
+
+    - pattern: (\w*)peer1-regulator(\w*)
+      urlSubstitutionExp: peer1-regulator:8051
+      sslTargetOverrideUrlSubstitutionExp: peer1-regulator
+      mappedHost: peer1-regulator
+
+  orderer:
+    - pattern: (\w*)orderer0(\w*)
+      urlSubstitutionExp: orderer0:7050
+      sslTargetOverrideUrlSubstitutionExp: orderer0
+      mappedHost: orderer0
+
+    - pattern: (\w*)orderer1(\w*)
+      urlSubstitutionExp: orderer1t:7050
+      sslTargetOverrideUrlSubstitutionExp: orderer1
+      mappedHost: orderer1
+      
+    - pattern: (\w*)orderer2(\w*)
+      urlSubstitutionExp: orderer2:7050
+      sslTargetOverrideUrlSubstitutionExp: orderer2
+      mappedHost: orderer2

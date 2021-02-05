@@ -1,0 +1,44 @@
+[
+    {
+        "name": "regulatorResourceTypesPrivateData",
+        "policy": "OR('regulator.member')",
+        "requiredPeerCount": 1,
+        "maxPeerCount": 3,
+        "blockToLive": 0
+    },
+    {
+        "name": "carrierResourceTypesPrivateData",
+        "policy": "OR('carrier.member')",
+        "requiredPeerCount": 1,
+        "maxPeerCount": 3,
+        "blockToLive": 0
+    },
+    {
+        "name": "importerBankResourceTypesPrivateData",
+        "policy": "OR('importer-bank.member')",
+        "requiredPeerCount": 1,
+        "maxPeerCount": 3,
+        "blockToLive": 0
+    },
+    {
+        "name": "exporterBankResourceTypesPrivateData",
+        "policy": "OR('exporter-bank.member')",
+        "requiredPeerCount": 1,
+        "maxPeerCount": 3,
+        "blockToLive": 0
+    },
+    {
+        "name": "importerResourceTypesPrivateData",
+        "policy": "OR('importer.member')",
+        "requiredPeerCount": 1,
+        "maxPeerCount": 3,
+        "blockToLive": 0
+    },
+    {
+        "name": "exporterResourceTypesPrivateData",
+        "policy": "OR('exporter.member')",
+        "requiredPeerCount": 1,
+        "maxPeerCount": 3,
+        "blockToLive": 0
+    }
+]

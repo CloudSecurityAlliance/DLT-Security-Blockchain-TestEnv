@@ -1,0 +1,184 @@
+{
+	"name": "first-network",
+	"version": "1.0.0",
+	"client": {
+		"tlsEnable": true,
+		"adminCredential": {
+			"id": "admin",
+			"password": "adminpw"
+		},
+		"enableAuthentication": true,
+		"organization": "regulator",
+		"connection": {
+			"timeout": {
+				"peer": {
+					"endorser": "300"
+				},
+				"orderer": "300"
+			}
+		}
+	},
+	"channels": {
+		"mainchannel": {
+			"peers": {
+				"peer0-regulator": {},
+				"peer1-regulator": {},
+				"peer0-carrier": {},
+				"peer1-carrier": {},
+				"peer0-importer-bank": {},
+				"peer1-importer-bank": {},
+				"peer0-exporter-bank": {},
+				"peer1-exporter-bank": {},
+				"peer0-importer": {},
+				"peer1-importer": {},
+				"peer0-exporter": {},
+				"peer1-exporter": {}
+			},
+			"connection": {
+				"timeout": {
+					"peer": {
+						"endorser": "6000",
+						"eventHub": "6000",
+						"eventReg": "6000"
+					}
+				}
+			}
+		}
+	},
+	"organizations": {
+		"regulator": {
+			"mspid": "regulator",
+			"adminPrivateKey": {
+				"path": "/tmp/crypto/peerOrganizations/regulator/users/Admin@regulator/msp/keystore/pvt-cert.pem"
+			},
+			"peers": ["peer0-regulator","peer1-regulator"],
+			"signedCert": {
+				"path": "/tmp/crypto/peerOrganizations/regulator/users/Admin@regulator/msp/signcerts/Admin@regulator-cert.pem"
+			}
+		},
+		"carrier": {
+			"mspid": "carrier",
+			"adminPrivateKey": {
+				"path": "/tmp/crypto/peerOrganizations/carrier/users/Admin@carrier/msp/keystore/pvt-cert.pem"
+			},
+			"peers": ["peer0-carrier","peer1-carrier"],
+			"signedCert": {
+				"path": "/tmp/crypto/peerOrganizations/carrier/users/Admin@carrier/msp/signcerts/Admin@carrier-cert.pem"
+			}
+		},
+		"importer-bank": {
+			"mspid": "importer-bank",
+			"adminPrivateKey": {
+				"path": "/tmp/crypto/peerOrganizations/importer-bank/users/Admin@importer-bank/msp/keystore/pvt-cert.pem"
+			},
+			"peers": ["peer0-importer-bank","peer1-importer-bank"],
+			"signedCert": {
+				"path": "/tmp/crypto/peerOrganizations/importer-bank/users/Admin@importer-bank/msp/signcerts/Admin@importer-bank-cert.pem"
+			}
+		},
+		"exporter-bank": {
+			"mspid": "exporter-bank",
+			"adminPrivateKey": {
+				"path": "/tmp/crypto/peerOrganizations/exporter-bank/users/Admin@exporter-bank/msp/keystore/pvt-cert.pem"
+			},
+			"peers": ["peer0-exporter-bank","peer1-exporter-bank"],
+			"signedCert": {
+				"path": "/tmp/crypto/peerOrganizations/exporter-bank/users/Admin@exporter-bank/msp/signcerts/Admin@exporter-bank-cert.pem"
+			}
+		},
+		"importer": {
+			"mspid": "importer",
+			"adminPrivateKey": {
+				"path": "/tmp/crypto/peerOrganizations/importer/users/Admin@importer/msp/keystore/pvt-cert.pem"
+			},
+			"peers": ["peer0-importer","peer1-importer"],
+			"signedCert": {
+				"path": "/tmp/crypto/peerOrganizations/importer/users/Admin@importer/msp/signcerts/Admin@importer-cert.pem"
+			}
+		},
+		"exporter": {
+			"mspid": "exporter",
+			"adminPrivateKey": {
+				"path": "/tmp/crypto/peerOrganizations/exporter/users/Admin@exporter/msp/keystore/pvt-cert.pem"
+			},
+			"peers": ["peer0-exporter","peer1-exporter"],
+			"signedCert": {
+				"path": "/tmp/crypto/peerOrganizations/exporter/users/Admin@exporter/msp/signcerts/Admin@exporter-cert.pem"
+			}
+		}
+	},
+	"peers": {
+		"peer0-regulator": {
+			"tlsCACerts": {
+				"path": "/tmp/crypto/peerOrganizations/regulator/peers/peer0-regulator/tls/ca.crt"
+			},
+			"url": "grpcs://peer0-regulator:7051"
+		},
+		"peer1-regulator": {
+			"tlsCACerts": {
+				"path": "/tmp/crypto/peerOrganizations/regulator/peers/peer1-regulator/tls/ca.crt"
+			},
+			"url": "grpcs://peer1-regulator:8051"
+		},
+		"peer0-carrier": {
+			"tlsCACerts": {
+				"path": "/tmp/crypto/peerOrganizations/carrier/peers/peer0-carrier/tls/ca.crt"
+			},
+			"url": "grpcs://peer0-carrier:9051"
+		},
+		"peer1-carrier": {
+			"tlsCACerts": {
+				"path": "/tmp/crypto/peerOrganizations/carrier/peers/peer1-carrier/tls/ca.crt"
+			},
+			"url": "grpcs://peer1-carrier:10051"
+		},
+		"peer0-importer-bank": {
+			"tlsCACerts": {
+				"path": "/tmp/crypto/peerOrganizations/importer-bank/peers/peer0-importer-bank/tls/ca.crt"
+			},
+			"url": "grpcs://peer0-importer-bank:1151"
+		},
+		"peer1-importer-bank": {
+			"tlsCACerts": {
+				"path": "/tmp/crypto/peerOrganizations/importer-bank/peers/peer1-importer-bank/tls/ca.crt"
+			},
+			"url": "grpcs://peer1-importer-bank:12051"
+		},
+		"peer0-exporter-bank": {
+			"tlsCACerts": {
+				"path": "/tmp/crypto/peerOrganizations/exporter-bank/peers/peer0-exporter-bank/tls/ca.crt"
+			},
+			"url": "grpcs://peer0-exporter-bank:13051"
+		},
+		"peer1-exporter-bank": {
+			"tlsCACerts": {
+				"path": "/tmp/crypto/peerOrganizations/exporter-bank/peers/peer1-exporter-bank/tls/ca.crt"
+			},
+			"url": "grpcs://peer1-exporter-bank:14051"
+		},
+		"peer0-importer": {
+			"tlsCACerts": {
+				"path": "/tmp/crypto/peerOrganizations/importer/peers/peer0-importer/tls/ca.crt"
+			},
+			"url": "grpcs://peer0-importer:15051"
+		},
+		"peer1-importer": {
+			"tlsCACerts": {
+				"path": "/tmp/crypto/peerOrganizations/importer/peers/peer1-importer/tls/ca.crt"
+			},
+			"url": "grpcs://peer1-importer:16051"
+		},
+		"peer0-exporter": {
+			"tlsCACerts": {
+				"path": "/tmp/crypto/peerOrganizations/exporter/peers/peer0-exporter/tls/ca.crt"
+			},
+			"url": "grpcs://peer0-exporter:17051"
+		},
+		"peer1-exporter": {
+			"tlsCACerts": {
+				"path": "/tmp/crypto/peerOrganizations/exporter/peers/peer1-exporter/tls/ca.crt"
+			},
+			"url": "grpcs://peer1-exporter:18051"
+		}
+	}
+}

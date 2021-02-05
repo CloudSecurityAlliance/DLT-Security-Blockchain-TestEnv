@@ -1,0 +1,280 @@
+version: '2'
+
+networks:
+  fabric-ca:
+
+services:
+  # Servers
+  orderers-ca:
+    image: hyperledger/fabric-ca:1.4.7
+    container_name: orderers-ca
+    ports:
+      - 7054:7054
+    environment: 
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+      - USERNAME=admin
+      - PASSWORD=adminpw
+      - CSR_HOSTS=orderers-ca
+    volumes:
+      - ../../state/ca/orderers/server:/etc/hyperledger/fabric-ca-server
+      - ../../scripts:/scripts
+    command: sh -c '/scripts/start-root-ca.sh'
+    networks:
+      - fabric-ca
+  regulator-ca:
+    image: hyperledger/fabric-ca:1.4.7
+    container_name: regulator-ca
+    ports:
+      - 7055:7054
+    environment: 
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+      - USERNAME=admin
+      - PASSWORD=adminpw
+      - CSR_HOSTS=regulator-ca
+    volumes:
+      - ../../state/ca/regulator/server:/etc/hyperledger/fabric-ca-server
+      - ../../scripts:/scripts
+    command: sh -c '/scripts/start-root-ca.sh'
+    networks:
+      - fabric-ca
+  carrier-ca:
+    image: hyperledger/fabric-ca:1.4.7
+    container_name: carrier-ca
+    ports:
+      - 7056:7054
+    environment: 
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+      - USERNAME=admin
+      - PASSWORD=adminpw
+      - CSR_HOSTS=carrier-ca
+    volumes:
+      - ../../state/ca/carrier/server:/etc/hyperledger/fabric-ca-server
+      - ../../scripts:/scripts
+    command: sh -c '/scripts/start-root-ca.sh'
+    networks:
+      - fabric-ca
+  importer-bank-ca:
+    image: hyperledger/fabric-ca:1.4.7
+    container_name: importer-bank-ca
+    ports:
+      - 7057:7054
+    environment: 
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+      - USERNAME=admin
+      - PASSWORD=adminpw
+      - CSR_HOSTS=importer-bank-ca
+    volumes:
+      - ../../state/ca/importer-bank/server:/etc/hyperledger/fabric-ca-server
+      - ../../scripts:/scripts
+    command: sh -c '/scripts/start-root-ca.sh'
+    networks:
+      - fabric-ca
+  exporter-bank-ca:
+    image: hyperledger/fabric-ca:1.4.7
+    container_name: exporter-bank-ca
+    ports:
+      - 7058:7054
+    environment: 
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+      - USERNAME=admin
+      - PASSWORD=adminpw
+      - CSR_HOSTS=exporter-bank-ca
+    volumes:
+      - ../../state/ca/exporter-bank/server:/etc/hyperledger/fabric-ca-server
+      - ../../scripts:/scripts
+    command: sh -c '/scripts/start-root-ca.sh'
+    networks:
+      - fabric-ca
+  importer-ca:
+    image: hyperledger/fabric-ca:1.4.7
+    container_name: importer-ca
+    ports:
+      - 7059:7054
+    environment: 
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+      - USERNAME=admin
+      - PASSWORD=adminpw
+      - CSR_HOSTS=importer-ca
+    volumes:
+      - ../../state/ca/importer/server:/etc/hyperledger/fabric-ca-server
+      - ../../scripts:/scripts
+    command: sh -c '/scripts/start-root-ca.sh'
+    networks:
+      - fabric-ca
+  exporter-ca:
+    image: hyperledger/fabric-ca:1.4.7
+    container_name: exporter-ca
+    ports:
+      - 7060:7054
+    environment: 
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+      - USERNAME=admin
+      - PASSWORD=adminpw
+      - CSR_HOSTS=exporter-ca
+    volumes:
+      - ../../state/ca/exporter/server:/etc/hyperledger/fabric-ca-server
+      - ../../scripts:/scripts
+    command: sh -c '/scripts/start-root-ca.sh'
+    networks:
+      - fabric-ca        
+  # Clients
+  orderers-client:
+    tty: true
+    image: hyperledger/fabric-ca:1.4.7
+    container_name: orderers-client
+    environment:
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-client
+      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+      - CA_SCHEME=https
+      - CA_URL=orderers-ca:7054
+      - CA_USERNAME=admin
+      - CA_PASSWORD=adminpw
+      - CA_CERT_PATH=/etc/hyperledger/fabric-ca-server/tls-cert.pem
+    volumes:
+      - ../../state/ca/orderers/client:/etc/hyperledger/fabric-ca-client
+      - ../../scripts:/scripts
+      - ../../state/ca/orderers/server:/etc/hyperledger/fabric-ca-server
+      - ../../crypto-config:/etc/hyperledger/fabric-ca/crypto-config
+    command: sh -c '/scripts/start-orderer-client.sh'
+    networks:
+      - fabric-ca
+    depends_on:
+      - orderers-ca
+  carrier-client:
+    tty: true
+    image: hyperledger/fabric-ca:1.4.7
+    container_name: carrier-client
+    environment:
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-client
+      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+      - ORG_NAME=carrier
+      - CA_SCHEME=https
+      - CA_URL=carrier-ca:7054
+      - CA_USERNAME=admin
+      - CA_PASSWORD=adminpw
+      - CA_CERT_PATH=/etc/hyperledger/fabric-ca-server/tls-cert.pem
+    volumes:
+      - ../../state/ca/carrier/client:/etc/hyperledger/fabric-ca-client
+      - ../../scripts:/scripts
+      - ../../state/ca/carrier/server:/etc/hyperledger/fabric-ca-server
+      - ../../crypto-config:/etc/hyperledger/fabric-ca/crypto-config
+    command: sh -c '/scripts/start-org-client.sh'
+    networks:
+      - fabric-ca
+    depends_on:
+      - carrier-ca
+  regulator-client:
+    tty: true
+    image: hyperledger/fabric-ca:1.4.7
+    container_name: regulator-client
+    environment:
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-client
+      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+      - ORG_NAME=regulator
+      - CA_SCHEME=https
+      - CA_URL=regulator-ca:7054
+      - CA_USERNAME=admin
+      - CA_PASSWORD=adminpw
+      - CA_CERT_PATH=/etc/hyperledger/fabric-ca-server/tls-cert.pem
+    volumes:
+      - ../../state/ca/regulator/client:/etc/hyperledger/fabric-ca-client
+      - ../../scripts:/scripts
+      - ../../state/ca/regulator/server:/etc/hyperledger/fabric-ca-server
+      - ../../crypto-config:/etc/hyperledger/fabric-ca/crypto-config
+    command: sh -c '/scripts/start-org-client.sh'
+    networks:
+      - fabric-ca
+    depends_on:
+      - regulator-ca
+  importer-bank-client:
+    tty: true
+    image: hyperledger/fabric-ca:1.4.7
+    container_name: importer-bank-client
+    environment:
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-client
+      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+      - ORG_NAME=importer-bank
+      - CA_SCHEME=https
+      - CA_URL=importer-bank-ca:7054
+      - CA_USERNAME=admin
+      - CA_PASSWORD=adminpw
+      - CA_CERT_PATH=/etc/hyperledger/fabric-ca-server/tls-cert.pem
+    volumes:
+      - ../../state/ca/importer-bank/client:/etc/hyperledger/fabric-ca-client
+      - ../../scripts:/scripts
+      - ../../state/ca/importer-bank/server:/etc/hyperledger/fabric-ca-server
+      - ../../crypto-config:/etc/hyperledger/fabric-ca/crypto-config
+    command: sh -c '/scripts/start-org-client.sh'
+    networks:
+      - fabric-ca
+    depends_on:
+      - importer-bank-ca
+  exporter-bank-client:
+    tty: true
+    image: hyperledger/fabric-ca:1.4.7
+    container_name: exporter-bank-client
+    environment:
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-client
+      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+      - ORG_NAME=exporter-bank
+      - CA_SCHEME=https
+      - CA_URL=exporter-bank-ca:7054
+      - CA_USERNAME=admin
+      - CA_PASSWORD=adminpw
+      - CA_CERT_PATH=/etc/hyperledger/fabric-ca-server/tls-cert.pem
+    volumes:
+      - ../../state/ca/exporter-bank/client:/etc/hyperledger/fabric-ca-client
+      - ../../scripts:/scripts
+      - ../../state/ca/exporter-bank/server:/etc/hyperledger/fabric-ca-server
+      - ../../crypto-config:/etc/hyperledger/fabric-ca/crypto-config
+    command: sh -c '/scripts/start-org-client.sh'
+    networks:
+      - fabric-ca
+    depends_on:
+      - exporter-bank-ca
+  importer-client:
+    tty: true
+    image: hyperledger/fabric-ca:1.4.7
+    container_name: importer-client
+    environment:
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-client
+      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+      - ORG_NAME=importer
+      - CA_SCHEME=https
+      - CA_URL=importer-ca:7054
+      - CA_USERNAME=admin
+      - CA_PASSWORD=adminpw
+      - CA_CERT_PATH=/etc/hyperledger/fabric-ca-server/tls-cert.pem
+    volumes:
+      - ../../state/ca/importer/client:/etc/hyperledger/fabric-ca-client
+      - ../../scripts:/scripts
+      - ../../state/ca/importer/server:/etc/hyperledger/fabric-ca-server
+      - ../../crypto-config:/etc/hyperledger/fabric-ca/crypto-config
+    command: sh -c '/scripts/start-org-client.sh'
+    networks:
+      - fabric-ca
+    depends_on:
+      - importer-ca
+  exporter-client:
+    tty: true
+    image: hyperledger/fabric-ca:1.4.7
+    container_name: exporter-client
+    environment:
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-client
+      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+      - ORG_NAME=exporter
+      - CA_SCHEME=https
+      - CA_URL=exporter-ca:7054
+      - CA_USERNAME=admin
+      - CA_PASSWORD=adminpw
+      - CA_CERT_PATH=/etc/hyperledger/fabric-ca-server/tls-cert.pem
+    volumes:
+      - ../../state/ca/exporter/client:/etc/hyperledger/fabric-ca-client
+      - ../../scripts:/scripts
+      - ../../state/ca/exporter/server:/etc/hyperledger/fabric-ca-server
+      - ../../crypto-config:/etc/hyperledger/fabric-ca/crypto-config
+    command: sh -c '/scripts/start-org-client.sh'
+    networks:
+      - fabric-ca
+    depends_on:
+      - exporter-ca

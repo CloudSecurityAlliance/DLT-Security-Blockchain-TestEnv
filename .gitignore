@@ -1,0 +1,7 @@
+chaincode/resource_types/vendor/
+chaincode/resources/vendor/
+channels/
+crypto-config/
+fabric-samples/
+orderer/
+state/
