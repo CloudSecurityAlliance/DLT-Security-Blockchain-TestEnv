@@ -1,8 +1,10 @@
 Docker Compose portion of the Readme
 =====================================
 
-docker-compose -f network/docker/docker-compose-ca.yaml down --remove-orphans
-docker-compose -f network/docker/docker-compose.yaml down --remove-orphans
+sudo docker-compose -f network/docker/docker-compose-ca.yaml down --remove-orphans
+sudo docker-compose -f network/docker/docker-compose.yaml down --remove-orphans
+
+find ./ -type f -exec sed -i -e 's/info/error/g' {} \;
 
 You then need to add to your bash the path and then source it. I use ZSH so this is how I do it. Copy this into your bash file
 ```bash
@@ -30,7 +32,7 @@ configtxgen:
 
 Okay, lets generate the certs for the network
 ```bash
-docker-compose -f network/docker/docker-compose-ca.yaml up
+sudo docker-compose -f network/docker/docker-compose-ca.yaml up
 ```
 
 After it's done close down the network. Now it's time to generate the network artifacts
@@ -52,105 +54,106 @@ configtxgen -profile MainChannel -outputAnchorPeersUpdate ./channels/exporter-an
 Now it's time to start the network
 - If OSX - need to jump to minikube for now. I can't find a way to make it work with Catalina. I'll keep playing around with it. It's a problem with the docker.sock file and not being able to mount it to the peer. It's needed to spin up containers for the chaincode.
 ```bash
-docker-compose -f network/docker/docker-compose.yaml up
+sudo docker-compose -f network/docker/docker-compose.yaml up
 ```
 
 Lets setup the artifacts
 ```bash
-docker exec -it cli-peer0-regulator bash -c 'peer channel create -c mainchannel -f ./channels/mainchannel.tx -o orderer0:7050 --tls --cafile=/etc/hyperledger/orderers/msp/tlscacerts/orderers-ca-7054.pem'
+sudo docker exec -it cli-peer0-regulator bash -c 'peer channel create -c mainchannel -f ./channels/mainchannel.tx -o orderer0:7050 --tls --cafile=/etc/hyperledger/orderers/msp/tlscacerts/orderers-ca-7054.pem'
 
-docker exec -it cli-peer0-regulator bash -c 'cp mainchannel.block ./channels/'
+sudo docker exec -it cli-peer0-regulator bash -c 'cp mainchannel.block ./channels/'
 
-docker exec -it cli-peer0-regulator bash -c 'peer channel join -b channels/mainchannel.block'
-docker exec -it cli-peer1-regulator bash -c 'peer channel join -b channels/mainchannel.block'
+sudo docker exec -it cli-peer0-regulator bash -c 'peer channel join -b channels/mainchannel.block'
+sudo docker exec -it cli-peer1-regulator bash -c 'peer channel join -b channels/mainchannel.block'
 
-docker exec -it cli-peer0-carrier bash -c 'peer channel join -b channels/mainchannel.block'
-docker exec -it cli-peer1-carrier bash -c 'peer channel join -b channels/mainchannel.block'
+sudo docker exec -it cli-peer0-carrier bash -c 'peer channel join -b channels/mainchannel.block'
+sudo docker exec -it cli-peer1-carrier bash -c 'peer channel join -b channels/mainchannel.block'
 
-docker exec -it cli-peer0-importer-bank bash -c 'peer channel join -b channels/mainchannel.block'
-docker exec -it cli-peer1-importer-bank bash -c 'peer channel join -b channels/mainchannel.block'
+sudo docker exec -it cli-peer0-importer-bank bash -c 'peer channel join -b channels/mainchannel.block'
+sudo docker exec -it cli-peer1-importer-bank bash -c 'peer channel join -b channels/mainchannel.block'
 
-docker exec -it cli-peer0-exporter-bank bash -c 'peer channel join -b channels/mainchannel.block'
-docker exec -it cli-peer1-exporter-bank bash -c 'peer channel join -b channels/mainchannel.block'
+sudo docker exec -it cli-peer0-exporter-bank bash -c 'peer channel join -b channels/mainchannel.block'
+sudo docker exec -it cli-peer1-exporter-bank bash -c 'peer channel join -b channels/mainchannel.block'
 
-docker exec -it cli-peer0-importer bash -c 'peer channel join -b channels/mainchannel.block'
-docker exec -it cli-peer1-importer bash -c 'peer channel join -b channels/mainchannel.block'
+sudo docker exec -it cli-peer0-importer bash -c 'peer channel join -b channels/mainchannel.block'
+sudo docker exec -it cli-peer1-importer bash -c 'peer channel join -b channels/mainchannel.block'
 
-docker exec -it cli-peer0-exporter bash -c 'peer channel join -b channels/mainchannel.block'
-docker exec -it cli-peer1-exporter bash -c 'peer channel join -b channels/mainchannel.block'
+sudo docker exec -it cli-peer0-exporter bash -c 'peer channel join -b channels/mainchannel.block'
+sudo docker exec -it cli-peer1-exporter bash -c 'peer channel join -b channels/mainchannel.block'
 
 sleep 5
 
-docker exec -it cli-peer0-regulator bash -c 'peer channel update -o orderer0:7050 --tls --cafile=/etc/hyperledger/orderers/msp/tlscacerts/orderers-ca-7054.pem -c mainchannel -f channels/regulator-anchors.tx'
-docker exec -it cli-peer0-carrier bash -c 'peer channel update -o orderer0:7050 --tls --cafile=/etc/hyperledger/orderers/msp/tlscacerts/orderers-ca-7054.pem -c mainchannel -f channels/carrier-anchors.tx'
-docker exec -it cli-peer0-importer-bank bash -c 'peer channel update -o orderer0:7050 --tls --cafile=/etc/hyperledger/orderers/msp/tlscacerts/orderers-ca-7054.pem -c mainchannel -f channels/importer-bank-anchors.tx'
+sudo docker exec -it cli-peer0-regulator bash -c 'peer channel update -o orderer0:7050 --tls --cafile=/etc/hyperledger/orderers/msp/tlscacerts/orderers-ca-7054.pem -c mainchannel -f channels/regulator-anchors.tx'
+sudo docker exec -it cli-peer0-carrier bash -c 'peer channel update -o orderer0:7050 --tls --cafile=/etc/hyperledger/orderers/msp/tlscacerts/orderers-ca-7054.pem -c mainchannel -f channels/carrier-anchors.tx'
+sudo docker exec -it cli-peer0-importer-bank bash -c 'peer channel update -o orderer0:7050 --tls --cafile=/etc/hyperledger/orderers/msp/tlscacerts/orderers-ca-7054.pem -c mainchannel -f channels/importer-bank-anchors.tx'
 
-docker exec -it cli-peer0-exporter-bank bash -c 'peer channel update -o orderer0:7050 --tls --cafile=/etc/hyperledger/orderers/msp/tlscacerts/orderers-ca-7054.pem -c mainchannel -f channels/exporter-bank-anchors.tx'
-docker exec -it cli-peer0-importer bash -c 'peer channel update -o orderer0:7050 --tls --cafile=/etc/hyperledger/orderers/msp/tlscacerts/orderers-ca-7054.pem -c mainchannel -f channels/importer-anchors.tx'
-docker exec -it cli-peer0-exporter bash -c 'peer channel update -o orderer0:7050 --tls --cafile=/etc/hyperledger/orderers/msp/tlscacerts/orderers-ca-7054.pem -c mainchannel -f channels/exporter-anchors.tx'
+sudo docker exec -it cli-peer0-exporter-bank bash -c 'peer channel update -o orderer0:7050 --tls --cafile=/etc/hyperledger/orderers/msp/tlscacerts/orderers-ca-7054.pem -c mainchannel -f channels/exporter-bank-anchors.tx'
+sudo docker exec -it cli-peer0-importer bash -c 'peer channel update -o orderer0:7050 --tls --cafile=/etc/hyperledger/orderers/msp/tlscacerts/orderers-ca-7054.pem -c mainchannel -f channels/importer-anchors.tx'
+sudo docker exec -it cli-peer0-exporter bash -c 'peer channel update -o orderer0:7050 --tls --cafile=/etc/hyperledger/orderers/msp/tlscacerts/orderers-ca-7054.pem -c mainchannel -f channels/exporter-anchors.tx'
 ```
 
 Now we are going to install the chaincode
 - Make sure you go mod vendor in each chaincode folder... might need to remove the go.sum depending
 ```bash
-docker exec -it cli-peer0-regulator bash -c 'peer lifecycle chaincode package resource_types.tar.gz --path /opt/gopath/src/resource_types --lang golang --label resource_types_1' &
-docker exec -it cli-peer1-regulator bash -c 'peer lifecycle chaincode package resource_types.tar.gz --path /opt/gopath/src/resource_types --lang golang --label resource_types_1' &
+sudo docker exec -it cli-peer0-regulator bash -c 'peer lifecycle chaincode package resource_types.tar.gz --path /opt/gopath/src/resource_types --lang golang --label resource_types_1' &
+sudo docker exec -it cli-peer1-regulator bash -c 'peer lifecycle chaincode package resource_types.tar.gz --path /opt/gopath/src/resource_types --lang golang --label resource_types_1' &
 
-docker exec -it cli-peer0-carrier bash -c 'peer lifecycle chaincode package resource_types.tar.gz --path /opt/gopath/src/resource_types --lang golang --label resource_types_1' &
-docker exec -it cli-peer1-carrier bash -c 'peer lifecycle chaincode package resource_types.tar.gz --path /opt/gopath/src/resource_types --lang golang --label resource_types_1' &
+sudo docker exec -it cli-peer0-carrier bash -c 'peer lifecycle chaincode package resource_types.tar.gz --path /opt/gopath/src/resource_types --lang golang --label resource_types_1' &
+sudo docker exec -it cli-peer1-carrier bash -c 'peer lifecycle chaincode package resource_types.tar.gz --path /opt/gopath/src/resource_types --lang golang --label resource_types_1' &
 
-docker exec -it cli-peer0-importer-bank bash -c 'peer lifecycle chaincode package resource_types.tar.gz --path /opt/gopath/src/resource_types --lang golang --label resource_types_1' &
-docker exec -it cli-peer1-importer-bank bash -c 'peer lifecycle chaincode package resource_types.tar.gz --path /opt/gopath/src/resource_types --lang golang --label resource_types_1' &
+sudo docker exec -it cli-peer0-importer-bank bash -c 'peer lifecycle chaincode package resource_types.tar.gz --path /opt/gopath/src/resource_types --lang golang --label resource_types_1' &
+sudo docker exec -it cli-peer1-importer-bank bash -c 'peer lifecycle chaincode package resource_types.tar.gz --path /opt/gopath/src/resource_types --lang golang --label resource_types_1' &
 
-docker exec -it cli-peer0-exporter-bank bash -c 'peer lifecycle chaincode package resource_types.tar.gz --path /opt/gopath/src/resource_types --lang golang --label resource_types_1' &
-docker exec -it cli-peer1-exporter-bank bash -c 'peer lifecycle chaincode package resource_types.tar.gz --path /opt/gopath/src/resource_types --lang golang --label resource_types_1' &
+sudo docker exec -it cli-peer0-exporter-bank bash -c 'peer lifecycle chaincode package resource_types.tar.gz --path /opt/gopath/src/resource_types --lang golang --label resource_types_1' &
+sudo docker exec -it cli-peer1-exporter-bank bash -c 'peer lifecycle chaincode package resource_types.tar.gz --path /opt/gopath/src/resource_types --lang golang --label resource_types_1' &
 
-docker exec -it cli-peer0-importer bash -c 'peer lifecycle chaincode package resource_types.tar.gz --path /opt/gopath/src/resource_types --lang golang --label resource_types_1' &
-docker exec -it cli-peer1-importer bash -c 'peer lifecycle chaincode package resource_types.tar.gz --path /opt/gopath/src/resource_types --lang golang --label resource_types_1' &
+sudo docker exec -it cli-peer0-importer bash -c 'peer lifecycle chaincode package resource_types.tar.gz --path /opt/gopath/src/resource_types --lang golang --label resource_types_1' &
+sudo docker exec -it cli-peer1-importer bash -c 'peer lifecycle chaincode package resource_types.tar.gz --path /opt/gopath/src/resource_types --lang golang --label resource_types_1' &
 
-docker exec -it cli-peer0-exporter bash -c 'peer lifecycle chaincode package resource_types.tar.gz --path /opt/gopath/src/resource_types --lang golang --label resource_types_1' &
-docker exec -it cli-peer1-exporter bash -c 'peer lifecycle chaincode package resource_types.tar.gz --path /opt/gopath/src/resource_types --lang golang --label resource_types_1'
-
-
-docker exec -it cli-peer0-regulator bash -c 'peer lifecycle chaincode install resource_types.tar.gz &> pkg.txt' &
-docker exec -it cli-peer1-regulator bash -c 'peer lifecycle chaincode install resource_types.tar.gz' &
-
-docker exec -it cli-peer0-carrier bash -c 'peer lifecycle chaincode install resource_types.tar.gz &> pkg.txt' &
-docker exec -it cli-peer1-carrier bash -c 'peer lifecycle chaincode install resource_types.tar.gz' &
-
-docker exec -it cli-peer0-importer-bank bash -c 'peer lifecycle chaincode install resource_types.tar.gz &> pkg.txt' &
-docker exec -it cli-peer1-importer-bank bash -c 'peer lifecycle chaincode install resource_types.tar.gz' &
-
-docker exec -it cli-peer0-exporter-bank bash -c 'peer lifecycle chaincode install resource_types.tar.gz &> pkg.txt' &
-docker exec -it cli-peer1-exporter-bank bash -c 'peer lifecycle chaincode install resource_types.tar.gz' &
-
-docker exec -it cli-peer0-importer bash -c 'peer lifecycle chaincode install resource_types.tar.gz &> pkg.txt' &
-docker exec -it cli-peer1-importer bash -c 'peer lifecycle chaincode install resource_types.tar.gz' &
-
-docker exec -it cli-peer0-exporter bash -c 'peer lifecycle chaincode install resource_types.tar.gz &> pkg.txt' &
-docker exec -it cli-peer1-exporter bash -c 'peer lifecycle chaincode install resource_types.tar.gz'
-
-docker exec -it cli-peer0-regulator bash -c 'peer lifecycle chaincode approveformyorg -o orderer0:7050 --tls --cafile=/etc/hyperledger/orderers/msp/tlscacerts/orderers-ca-7054.pem --collections-config /opt/gopath/src/resource_types/collections-config.json --channelID mainchannel --name resource_types --version 1.0 --sequence 1 --package-id $(tail -n 1 pkg.txt | awk '\''NF>1{print $NF}'\'')' &
-docker exec -it cli-peer0-carrier bash -c 'peer lifecycle chaincode approveformyorg -o orderer0:7050 --tls --cafile=/etc/hyperledger/orderers/msp/tlscacerts/orderers-ca-7054.pem --collections-config /opt/gopath/src/resource_types/collections-config.json --channelID mainchannel --name resource_types --version 1.0 --sequence 1 --package-id $(tail -n 1 pkg.txt | awk '\''NF>1{print $NF}'\'')' &
-docker exec -it cli-peer0-importer-bank bash -c 'peer lifecycle chaincode approveformyorg -o orderer0:7050 --tls --cafile=/etc/hyperledger/orderers/msp/tlscacerts/orderers-ca-7054.pem --collections-config /opt/gopath/src/resource_types/collections-config.json --channelID mainchannel --name resource_types --version 1.0 --sequence 1 --package-id $(tail -n 1 pkg.txt | awk '\''NF>1{print $NF}'\'')' &
-docker exec -it cli-peer0-exporter-bank bash -c 'peer lifecycle chaincode approveformyorg -o orderer0:7050 --tls --cafile=/etc/hyperledger/orderers/msp/tlscacerts/orderers-ca-7054.pem --collections-config /opt/gopath/src/resource_types/collections-config.json --channelID mainchannel --name resource_types --version 1.0 --sequence 1 --package-id $(tail -n 1 pkg.txt | awk '\''NF>1{print $NF}'\'')' &
-docker exec -it cli-peer0-importer bash -c 'peer lifecycle chaincode approveformyorg -o orderer0:7050 --tls --cafile=/etc/hyperledger/orderers/msp/tlscacerts/orderers-ca-7054.pem --collections-config /opt/gopath/src/resource_types/collections-config.json --channelID mainchannel --name resource_types --version 1.0 --sequence 1 --package-id $(tail -n 1 pkg.txt | awk '\''NF>1{print $NF}'\'')' &
-docker exec -it cli-peer0-exporter bash -c 'peer lifecycle chaincode approveformyorg -o orderer0:7050 --tls --cafile=/etc/hyperledger/orderers/msp/tlscacerts/orderers-ca-7054.pem --collections-config /opt/gopath/src/resource_types/collections-config.json --channelID mainchannel --name resource_types --version 1.0 --sequence 1 --package-id $(tail -n 1 pkg.txt | awk '\''NF>1{print $NF}'\'')'
+sudo docker exec -it cli-peer0-exporter bash -c 'peer lifecycle chaincode package resource_types.tar.gz --path /opt/gopath/src/resource_types --lang golang --label resource_types_1' &
+sudo docker exec -it cli-peer1-exporter bash -c 'peer lifecycle chaincode package resource_types.tar.gz --path /opt/gopath/src/resource_types --lang golang --label resource_types_1'
 
 
-docker exec -it cli-peer0-regulator bash -c 'peer lifecycle chaincode commit -o orderer0:7050 --tls --cafile=/etc/hyperledger/orderers/msp/tlscacerts/orderers-ca-7054.pem --collections-config /opt/gopath/src/resource_types/collections-config.json --channelID mainchannel --name resource_types --version 1.0 --sequence 1'
+sudo docker exec -it cli-peer0-regulator bash -c 'peer lifecycle chaincode install resource_types.tar.gz &> pkg.txt' &
+sudo docker exec -it cli-peer1-regulator bash -c 'peer lifecycle chaincode install resource_types.tar.gz' &
+
+sudo docker exec -it cli-peer0-carrier bash -c 'peer lifecycle chaincode install resource_types.tar.gz &> pkg.txt' &
+sudo docker exec -it cli-peer1-carrier bash -c 'peer lifecycle chaincode install resource_types.tar.gz' &
+
+sudo docker exec -it cli-peer0-importer-bank bash -c 'peer lifecycle chaincode install resource_types.tar.gz &> pkg.txt' &
+sudo docker exec -it cli-peer1-importer-bank bash -c 'peer lifecycle chaincode install resource_types.tar.gz' &
+
+sudo docker exec -it cli-peer0-exporter-bank bash -c 'peer lifecycle chaincode install resource_types.tar.gz &> pkg.txt' &
+sudo docker exec -it cli-peer1-exporter-bank bash -c 'peer lifecycle chaincode install resource_types.tar.gz' &
+
+sudo docker exec -it cli-peer0-importer bash -c 'peer lifecycle chaincode install resource_types.tar.gz &> pkg.txt' &
+sudo docker exec -it cli-peer1-importer bash -c 'peer lifecycle chaincode install resource_types.tar.gz' &
+
+sudo docker exec -it cli-peer0-exporter bash -c 'peer lifecycle chaincode install resource_types.tar.gz &> pkg.txt' &
+sudo docker exec -it cli-peer1-exporter bash -c 'peer lifecycle chaincode install resource_types.tar.gz'
+
+sudo docker exec -it cli-peer0-regulator bash -c 'peer lifecycle chaincode approveformyorg -o orderer0:7050 --tls --cafile=/etc/hyperledger/orderers/msp/tlscacerts/orderers-ca-7054.pem --collections-config /opt/gopath/src/resource_types/collections-config.json --channelID mainchannel --name resource_types --version 1.0 --sequence 1 --package-id $(tail -n 1 pkg.txt | awk '\''NF>1{print $NF}'\'')' &
+sudo docker exec -it cli-peer0-carrier bash -c 'peer lifecycle chaincode approveformyorg -o orderer0:7050 --tls --cafile=/etc/hyperledger/orderers/msp/tlscacerts/orderers-ca-7054.pem --collections-config /opt/gopath/src/resource_types/collections-config.json --channelID mainchannel --name resource_types --version 1.0 --sequence 1 --package-id $(tail -n 1 pkg.txt | awk '\''NF>1{print $NF}'\'')' &
+sudo docker exec -it cli-peer0-importer-bank bash -c 'peer lifecycle chaincode approveformyorg -o orderer0:7050 --tls --cafile=/etc/hyperledger/orderers/msp/tlscacerts/orderers-ca-7054.pem --collections-config /opt/gopath/src/resource_types/collections-config.json --channelID mainchannel --name resource_types --version 1.0 --sequence 1 --package-id $(tail -n 1 pkg.txt | awk '\''NF>1{print $NF}'\'')' &
+sudo docker exec -it cli-peer0-exporter-bank bash -c 'peer lifecycle chaincode approveformyorg -o orderer0:7050 --tls --cafile=/etc/hyperledger/orderers/msp/tlscacerts/orderers-ca-7054.pem --collections-config /opt/gopath/src/resource_types/collections-config.json --channelID mainchannel --name resource_types --version 1.0 --sequence 1 --package-id $(tail -n 1 pkg.txt | awk '\''NF>1{print $NF}'\'')' &
+sudo docker exec -it cli-peer0-importer bash -c 'peer lifecycle chaincode approveformyorg -o orderer0:7050 --tls --cafile=/etc/hyperledger/orderers/msp/tlscacerts/orderers-ca-7054.pem --collections-config /opt/gopath/src/resource_types/collections-config.json --channelID mainchannel --name resource_types --version 1.0 --sequence 1 --package-id $(tail -n 1 pkg.txt | awk '\''NF>1{print $NF}'\'')' &
+sudo docker exec -it cli-peer0-exporter bash -c 'peer lifecycle chaincode approveformyorg -o orderer0:7050 --tls --cafile=/etc/hyperledger/orderers/msp/tlscacerts/orderers-ca-7054.pem --collections-config /opt/gopath/src/resource_types/collections-config.json --channelID mainchannel --name resource_types --version 1.0 --sequence 1 --package-id $(tail -n 1 pkg.txt | awk '\''NF>1{print $NF}'\'')'
+
+
+sudo docker exec -it cli-peer0-regulator bash -c 'peer lifecycle chaincode commit -o orderer0:7050 --tls --cafile=/etc/hyperledger/orderers/msp/tlscacerts/orderers-ca-7054.pem --collections-config /opt/gopath/src/resource_types/collections-config.json --channelID mainchannel --name resource_types --version 1.0 --sequence 1'
 ```
 
 Lets go ahead and test this chaincode
 - If OSX
 1. eval $(docker-machine env)
 ```bash
-docker exec -it cli-peer0-regulator bash -c 'peer chaincode invoke -C mainchannel -n resource_types -c '\''{"Args":["Create", "1","Parts"]}'\'' -o orderer0:7050 --tls --cafile=/etc/hyperledger/orderers/msp/tlscacerts/orderers-ca-7054.pem'
+sudo docker exec -it cli-peer0-regulator bash -c 'peer chaincode invoke -C mainchannel -n resource_types -c '\''{"Args":["Create", "1","Parts"]}'\'' -o orderer0:7050 --tls --cafile=/etc/hyperledger/orderers/msp/tlscacerts/orderers-ca-7054.pem'
 sleep 5
-docker exec -it cli-peer0-regulator bash -c 'peer chaincode query -C mainchannel -n resource_types -c '\''{"Args":["Index"]}'\'' -o orderer0:7050 --tls --cafile=/etc/hyperledger/orderers/msp/tlscacerts/orderers-ca-7054.pem'
-docker exec -it cli-peer0-regulator bash -c 'peer chaincode invoke -C mainchannel -n resource_types -c '\''{"Args":["Update", "1", "Parts 2"]}'\'' -o orderer0:7050 --tls --cafile=/etc/hyperledger/orderers/msp/tlscacerts/orderers-ca-7054.pem'
-docker exec -it cli-peer0-regulator bash -c 'peer chaincode invoke -C mainchannel -n resource_types -c '\''{"Args":["Update", "1", "Parts"]}'\'' -o orderer0:7050 --tls --cafile=/etc/hyperledger/orderers/msp/tlscacerts/orderers-ca-7054.pem'
-docker exec -it cli-peer0-regulator bash -c 'peer chaincode query -C mainchannel -n resource_types -c '\''{"Args":["Transactions","1"]}'\'' -o orderer0:7050 --tls --cafile=/etc/hyperledger/orderers/msp/tlscacerts/orderers-ca-7054.pem'
+sudo docker exec -it cli-peer0-regulator bash -c 'peer chaincode query -C mainchannel -n resource_types -c '\''{"Args":["Index"]}'\'' -o orderer0:7050 --tls --cafile=/etc/hyperledger/orderers/msp/tlscacerts/orderers-ca-7054.pem'
+sudo docker exec -it cli-peer0-regulator bash -c 'peer chaincode invoke -C mainchannel -n resource_types -c '\''{"Args":["Update", "1", "Parts 2"]}'\'' -o orderer0:7050 --tls --cafile=/etc/hyperledger/orderers/msp/tlscacerts/orderers-ca-7054.pem'
+sudo docker exec -it cli-peer0-regulator bash -c 'peer chaincode invoke -C mainchannel -n resource_types -c '\''{"Args":["Update", "1", "Parts"]}'\'' -o orderer0:7050 --tls --cafile=/etc/hyperledger/orderers/msp/tlscacerts/orderers-ca-7054.pem'
+sudo docker exec -it cli-peer0-regulator bash -c 'peer chaincode query -C mainchannel -n resource_types -c '\''{"Args":["Transactions","1"]}'\'' -o orderer0:7050 --tls --cafile=/etc/hyperledger/orderers/msp/tlscacerts/orderers-ca-7054.pem'
+
 ```
 
 Lets try the other chaincode
