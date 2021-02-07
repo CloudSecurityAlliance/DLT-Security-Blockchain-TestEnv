@@ -27,6 +27,7 @@ storage-setup-6858b4f776-5pgls   1/1     Running   0          17s
 We'll use one of these to setup the files for the network
 ```bash
 storagePod=$(sudo kubectl get pods -o=name | grep storage-setup | sed "s/^.\{4\}//")
+echo $storagePod
 sudo kubectl exec -it $storagePod -- mkdir -p /host/files/scripts
 sudo kubectl exec -it $storagePod -- mkdir -p /host/files/chaincode
 

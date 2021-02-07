@@ -53,6 +53,86 @@ Organizations:
             Endorsement:
                 Type: Signature
                 Rule: "OR('carrier.member')"
+    - &importer-bank
+        Name: importer-bank
+        ID: importer-bank
+        MSPDir: crypto-config/peerOrganizations/importer-bank/msp
+        AnchorPeers:
+            - Host: peer0-importer-bank-service
+              Port: 7051
+        Policies:
+            Readers:
+                Type: Signature
+                Rule: "OR('importer-bank.member')"
+            Writers:
+                Type: Signature
+                Rule: "OR('importer-bank.member')"
+            Admins:
+                Type: Signature
+                Rule: "OR('importer-bank.admin')"
+            Endorsement:
+                Type: Signature
+                Rule: "OR('importer-bank.member')"
+    - &exporter-bank
+        Name: exporter-bank
+        ID: exporter-bank
+        MSPDir: crypto-config/peerOrganizations/exporter-bank/msp
+        AnchorPeers:
+            - Host: peer0-exporter-bank-service
+              Port: 7051
+        Policies:
+            Readers:
+                Type: Signature
+                Rule: "OR('exporter-bank.member')"
+            Writers:
+                Type: Signature
+                Rule: "OR('exporter-bank.member')"
+            Admins:
+                Type: Signature
+                Rule: "OR('exporter-bank.admin')"
+            Endorsement:
+                Type: Signature
+                Rule: "OR('exporter-bank.member')"
+    - &importer
+        Name: importer
+        ID: importer
+        MSPDir: crypto-config/peerOrganizations/importer/msp
+        AnchorPeers:
+            - Host: peer0-importer-service
+              Port: 7051
+        Policies:
+            Readers:
+                Type: Signature
+                Rule: "OR('importer.member')"
+            Writers:
+                Type: Signature
+                Rule: "OR('importer.member')"
+            Admins:
+                Type: Signature
+                Rule: "OR('importer.admin')"
+            Endorsement:
+                Type: Signature
+                Rule: "OR('importer.member')"
+    - &exporter
+        Name: exporter
+        ID: exporter
+        MSPDir: crypto-config/peerOrganizations/exporter/msp
+        AnchorPeers:
+            - Host: peer0-exporter-service
+              Port: 7051
+        Policies:
+            Readers:
+                Type: Signature
+                Rule: "OR('exporter.member')"
+            Writers:
+                Type: Signature
+                Rule: "OR('exporter.member')"
+            Admins:
+                Type: Signature
+                Rule: "OR('exporter.admin')"
+            Endorsement:
+                Type: Signature
+                Rule: "OR('exporter.member')"
 
 Capabilities:
     Global: &ChannelCapabilities
@@ -157,6 +237,10 @@ Profiles:
                 Organizations:
                     - *regulator
                     - *carrier
+                    - *importer-bank
+                    - *exporter-bank
+                    - *importer
+                    - *exporter
     
     MainChannel:
         Consortium: MAIN
@@ -166,5 +250,9 @@ Profiles:
             Organizations:
                 - *regulator
                 - *carrier
+                - *importer-bank
+                - *exporter-bank
+                - *importer
+                - *exporter
             Capabilities:
                 <<: *ApplicationCapabilities

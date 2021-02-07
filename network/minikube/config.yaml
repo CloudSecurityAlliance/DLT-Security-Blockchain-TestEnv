@@ -71,7 +71,31 @@ organizations:
     peers:
       - peer0-carrier
       - peer1-carrier
-
+  importer-bank:
+    mspid: importer-bank
+    cryptopath: peerOrganizations/importer-bank/users/Admin@importer-bank/msp
+    peers:
+      - peer0-importer-bank
+      - peer1-importer-bank
+  exporter-bank:
+    mspid: exporter-bank
+    cryptopath: peerOrganizations/exporter-bank/users/Admin@exporter-bank/msp
+    peers:
+      - peer0-exporter-bank
+      - peer1-exporter-bank
+  importer:
+    mspid: importer
+    cryptopath: peerOrganizations/importer/users/Admin@importer/msp
+    peers:
+      - peer0-importer
+      - peer1-importer
+  exporter:
+    mspid: exporter
+    cryptopath: peerOrganizations/exporter/users/Admin@exporter/msp
+    peers:
+      - peer0-exporter
+      - peer1-exporter
+      
 orderers:
   _default:
     grpcOptions:
@@ -150,6 +174,70 @@ peers:
     tlsCACerts:
       path: /home/appbootup/Projects/k8s-hyperledger-fabric-2.2/crypto-config/peerOrganizations/carrier/msp/tlscacerts/carrier-ca-7054.pem
 
+  peer0-importer-bank:
+    grpcOptions:
+      ssl-target-name-override: peer0-importer-bank
+      grpc.http2.keepalive_time: 15
+    
+    tlsCACerts:
+      path: /home/appbootup/Projects/k8s-hyperledger-fabric-2.2/crypto-config/peerOrganizations/importer-bank/msp/tlscacerts/importer-bank-ca-7054.pem
+
+  peer1-importer-bank:
+    grpcOptions:
+      ssl-target-name-override: peer1-importer-bank
+      grpc.http2.keepalive_time: 15
+    
+    tlsCACerts:
+      path: /home/appbootup/Projects/k8s-hyperledger-fabric-2.2/crypto-config/peerOrganizations/importer-bank/msp/tlscacerts/importer-bank-ca-7054.pem
+
+  peer0-exporter-bank:
+    grpcOptions:
+      ssl-target-name-override: peer0-exporter-bank
+      grpc.http2.keepalive_time: 15
+    
+    tlsCACerts:
+      path: /home/appbootup/Projects/k8s-hyperledger-fabric-2.2/crypto-config/peerOrganizations/exporter-bank/msp/tlscacerts/exporter-bank-ca-7054.pem
+
+  peer1-exporter-bank:
+    grpcOptions:
+      ssl-target-name-override: peer1-exporter-bank
+      grpc.http2.keepalive_time: 15
+    
+    tlsCACerts:
+      path: /home/appbootup/Projects/k8s-hyperledger-fabric-2.2/crypto-config/peerOrganizations/exporter-bank/msp/tlscacerts/exporter-bank-ca-7054.pem
+
+  peer0-importer:
+    grpcOptions:
+      ssl-target-name-override: peer0-importer
+      grpc.http2.keepalive_time: 15
+    
+    tlsCACerts:
+      path: /home/appbootup/Projects/k8s-hyperledger-fabric-2.2/crypto-config/peerOrganizations/importer/msp/tlscacerts/importer-ca-7054.pem
+
+  peer1-importer:
+    grpcOptions:
+      ssl-target-name-override: peer1-importer
+      grpc.http2.keepalive_time: 15
+    
+    tlsCACerts:
+      path: /home/appbootup/Projects/k8s-hyperledger-fabric-2.2/crypto-config/peerOrganizations/importer/msp/tlscacerts/importer-ca-7054.pem
+
+  peer0-exporter:
+    grpcOptions:
+      ssl-target-name-override: peer0-exporter
+      grpc.http2.keepalive_time: 15
+    
+    tlsCACerts:
+      path: /home/appbootup/Projects/k8s-hyperledger-fabric-2.2/crypto-config/peerOrganizations/exporter/msp/tlscacerts/exporter-ca-7054.pem
+
+  peer1-exporter:
+    grpcOptions:
+      ssl-target-name-override: peer1-exporter
+      grpc.http2.keepalive_time: 15
+    
+    tlsCACerts:
+      path: /home/appbootup/Projects/k8s-hyperledger-fabric-2.2/crypto-config/peerOrganizations/exporter/msp/tlscacerts/exporter-ca-7054.pem
+
 entityMatchers:
 
   peer:
@@ -172,6 +260,46 @@ entityMatchers:
       urlSubstitutionExp: localhost:10051
       sslTargetOverrideUrlSubstitutionExp: peer1-carrier
       mappedHost: peer1-carrier
+
+    - pattern: (\w*)peer0-importer-bank(\w*)
+      urlSubstitutionExp: localhost:9051
+      sslTargetOverrideUrlSubstitutionExp: peer0-importer-bank
+      mappedHost: peer0-importer-bank
+
+    - pattern: (\w*)peer1-importer-bank(\w*)
+      urlSubstitutionExp: localhost:10051
+      sslTargetOverrideUrlSubstitutionExp: peer1-importer-bank
+      mappedHost: peer1-importer-bank
+
+    - pattern: (\w*)peer0-exporter-bank(\w*)
+      urlSubstitutionExp: localhost:9051
+      sslTargetOverrideUrlSubstitutionExp: peer0-exporter-bank
+      mappedHost: peer0-exporter-bank
+
+    - pattern: (\w*)peer1-exporter-bank(\w*)
+      urlSubstitutionExp: localhost:10051
+      sslTargetOverrideUrlSubstitutionExp: peer1-exporter-bank
+      mappedHost: peer1-exporter-bank
+
+    - pattern: (\w*)peer0-importer(\w*)
+      urlSubstitutionExp: localhost:9051
+      sslTargetOverrideUrlSubstitutionExp: peer0-importer
+      mappedHost: peer0-importer
+
+    - pattern: (\w*)peer1-importer(\w*)
+      urlSubstitutionExp: localhost:10051
+      sslTargetOverrideUrlSubstitutionExp: peer1-importer
+      mappedHost: peer1-importer
+
+    - pattern: (\w*)peer0-exporter(\w*)
+      urlSubstitutionExp: localhost:9051
+      sslTargetOverrideUrlSubstitutionExp: peer0-exporter
+      mappedHost: peer0-exporter
+
+    - pattern: (\w*)peer1-exporter(\w*)
+      urlSubstitutionExp: localhost:10051
+      sslTargetOverrideUrlSubstitutionExp: peer1-exporter
+      mappedHost: peer1-exporter
 
   orderer:
     - pattern: (\w*)orderer0(\w*)

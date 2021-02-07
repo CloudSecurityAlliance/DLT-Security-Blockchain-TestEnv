@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: peer0-exporter-service
+  labels: {
+    component: peer0,
+    type: peer,
+    org: exporter
+  }
+spec:
+  type: ClusterIP
+  selector:
+    component: peer0
+    type: peer
+    org: exporter
+  ports:
+    - port: 7051
+      targetPort: 7051
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: peer1-exporter-service
+  labels: {
+    component: peer1,
+    type: peer,
+    org: exporter
+  }
+spec:
+  type: ClusterIP
+  selector:
+    component: peer1
+    type: peer
+    org: exporter
+  ports:
+    - port: 7051
+      targetPort: 7051
