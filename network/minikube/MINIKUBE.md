@@ -7,6 +7,11 @@ Minikube Portion of the Readme
 [Kubernetes book](hhttps://www.amazon.com/Devops-2-3-Toolkit-Viktor-Farcic/dp/1789135508/ref=tmm_pap_swatch_0?_encoding=UTF8&sr=8-2)
 [K8s Persistent Volumes](https://kubernetes.io/docs/concepts/storage/persistent-volumes/)
 
+sudo kubectl delete -f network/minikube/storage/pvc.yaml
+sudo kubectl delete -f network/minikube/storage/setup
+sudo minikube delete --all --purge
+sudo make full-clean
+
 Okay, now that we've successfully ran the network locally, let's do this on a local kubernetes installation.
 ```bash
 sudo  minikube start --vm-driver=none
@@ -79,6 +84,15 @@ root@storage-setup-6858b4f776-wmlth:/host/files/crypto-config/peerOrganizations/
 root@storage-setup-6858b4f776-wmlth:/host/files/crypto-config/peerOrganizations/regulator/msp# ls
 IssuerPublicKey  IssuerRevocationPublicKey  admincerts	cacerts  keystore  signcerts  tlscacerts  user
 root@storage-setup-6858b4f776-wmlth:/host/files/crypto-config/peerOrganizations/regulator/msp# cd tlscacerts/
+
+cd /host/files/crypto-config/peerOrganizations/
+cd /host/files/crypto-config/peerOrganizations/regulator/msp/tlscacerts
+cd /host/files/crypto-config/peerOrganizations/carrier/msp/tlscacerts
+cd /host/files/crypto-config/peerOrganizations/importer-bank/msp/tlscacerts
+cd /host/files/crypto-config/peerOrganizations/exporter-bank/msp/tlscacerts
+cd /host/files/crypto-config/peerOrganizations/importer/msp/tlscacerts
+cd /host/files/crypto-config/peerOrganizations/exporter/msp/tlscacerts
+
 ```
 
 Time to generate the artifacts inside one of the containers and in the files folder - NOTE: if you are on OSX you might have to load the proper libs `curl -sSL https://bit.ly/2ysbOFE | bash -s -- 2.2.2 1.4.7`
@@ -122,6 +136,8 @@ sudo kubectl apply -f network/minikube/orgs/exporter-bank/couchdb
 sudo kubectl apply -f network/minikube/orgs/importer/couchdb
 sudo kubectl apply -f network/minikube/orgs/exporter/couchdb
 
+sudo kubectl get pods
+
 sudo kubectl apply -f network/minikube/orgs/regulator/
 sudo kubectl apply -f network/minikube/orgs/carrier/
 sudo kubectl apply -f network/minikube/orgs/importer-bank/
@@ -129,12 +145,16 @@ sudo kubectl apply -f network/minikube/orgs/importer/
 sudo kubectl apply -f network/minikube/orgs/exporter-bank/
 sudo kubectl apply -f network/minikube/orgs/exporter/
 
+sudo kubectl get pods
+
 sudo kubectl apply -f network/minikube/orgs/regulator/cli
 sudo kubectl apply -f network/minikube/orgs/carrier/cli
 sudo kubectl apply -f network/minikube/orgs/importer-bank/cli
 sudo kubectl apply -f network/minikube/orgs/importer/cli
 sudo kubectl apply -f network/minikube/orgs/exporter-bank/cli
 sudo kubectl apply -f network/minikube/orgs/exporter/cli
+
+sudo kubectl get pods
 ```
 
 

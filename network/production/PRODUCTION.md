@@ -36,12 +36,13 @@ ssh-keygen
 
 kops create cluster \
     --zones us-west-1b,us-west-1c \
-    --node-count 3 \
+    --node-count 2 \
     --master-zones us-west-1b,us-west-1c \
-    --master-count 3 \
+    --master-count 1 \
     --authorization AlwaysAllow --yes \
     --master-volume-size 40 \
     --node-volume-size 20
+
 ```
 
 To delete the cluster
@@ -63,7 +64,7 @@ After the cluster is created, need to add some secrets to the network
 ```bash
 sudo kubectl create secret generic couchdb --from-literal username=appbootup --from-literal password=1234
 
-kubectl create secret docker-registry regcred \
+sudo kubectl create secret docker-registry regcred \
     --docker-server=https://index.docker.io/v1/ \
     --docker-username=sachinsr \
     --docker-password=<password> \
@@ -74,7 +75,7 @@ Adding nginx to our network
 ```bash
 sudo kubectl apply -f https://raw.githubusercontent.com/kubernetes/kops/master/addons/ingress-nginx/v1.6.0.yaml
 
-sudo kubectl create secret tls csa-hyperledger.com --key ~/csa-hyperledger.com/privkey.pem --cert ~/csa-hyperledger.com/cert.pem
+sudo kubectl create secret tls itryblockchain.com --key ~/itryblockchain.com/privkey.pem --cert ~/itryblockchain.com/cert.pem
 
 sudo kubectl apply -f network/production/ingress-nginx.yaml
 ```
@@ -393,3 +394,6 @@ To delete the cluster
 ```bash
 kops delete cluster --yes
 ```
+
+
+# efs-itryblockchain (fs-6283c3b3)
