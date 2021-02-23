@@ -71,6 +71,30 @@ organizations:
     peers:
       - peer0-carrier-service
       - peer1-carrier-service
+  importer-bank:
+    mspid: importer-bank
+    cryptopath: peerOrganizations/importer-bank/users/Admin@importer-bank/msp
+    peers:
+      - peer0-importer-bank-service
+      - peer1-importer-bank-service
+  exporter-bank:
+    mspid: exporter-bank
+    cryptopath: peerOrganizations/exporter-bank/users/Admin@exporter-bank/msp
+    peers:
+      - peer0-exporter-bank-service
+      - peer1-exporter-bank-service
+  importer:
+    mspid: importer
+    cryptopath: peerOrganizations/importer/users/Admin@importer/msp
+    peers:
+      - peer0-importer-service
+      - peer1-importer-service
+  exporter:
+    mspid: exporter
+    cryptopath: peerOrganizations/exporter/users/Admin@exporter/msp
+    peers:
+      - peer0-exporter-service
+      - peer1-exporter-service
 
 orderers:
   _default:
@@ -150,6 +174,71 @@ peers:
     tlsCACerts:
       path: /host/files/crypto-config/peerOrganizations/carrier/msp/tlscacerts/carrier-ca-7054.pem
 
+  peer0-importer-bank-service:
+    grpcOptions:
+      ssl-target-name-override: peer0-importer-bank-service
+      grpc.http2.keepalive_time: 15
+    
+    tlsCACerts:
+      path: /host/files/crypto-config/peerOrganizations/importer-bank/msp/tlscacerts/importer-bank-ca-7054.pem
+
+  peer1-importer-bank-service:
+    grpcOptions:
+      ssl-target-name-override: peer1-importer-bank-service
+      grpc.http2.keepalive_time: 15
+    
+    tlsCACerts:
+      path: /host/files/crypto-config/peerOrganizations/importer-bank/msp/tlscacerts/importer-bank-ca-7054.pem
+
+  peer0-exporter-bank-service:
+    grpcOptions:
+      ssl-target-name-override: peer0-exporter-bank-service
+      grpc.http2.keepalive_time: 15
+    
+    tlsCACerts:
+      path: /host/files/crypto-config/peerOrganizations/exporter-bank/msp/tlscacerts/exporter-bank-ca-7054.pem
+
+  peer1-exporter-bank-service:
+    grpcOptions:
+      ssl-target-name-override: peer1-exporter-bank-service
+      grpc.http2.keepalive_time: 15
+    
+    tlsCACerts:
+      path: /host/files/crypto-config/peerOrganizations/exporter-bank/msp/tlscacerts/exporter-bank-ca-7054.pem
+
+  peer0-importer-service:
+    grpcOptions:
+      ssl-target-name-override: peer0-importer-service
+      grpc.http2.keepalive_time: 15
+    
+    tlsCACerts:
+      path: /host/files/crypto-config/peerOrganizations/importer/msp/tlscacerts/importer-ca-7054.pem
+
+  peer1-importer-service:
+    grpcOptions:
+      ssl-target-name-override: peer1-importer-service
+      grpc.http2.keepalive_time: 15
+    
+    tlsCACerts:
+      path: /host/files/crypto-config/peerOrganizations/importer/msp/tlscacerts/importer-ca-7054.pem
+
+  peer0-exporter-service:
+    grpcOptions:
+      ssl-target-name-override: peer0-exporter-service
+      grpc.http2.keepalive_time: 15
+    
+    tlsCACerts:
+      path: /host/files/crypto-config/peerOrganizations/exporter/msp/tlscacerts/exporter-ca-7054.pem
+
+  peer1-exporter-service:
+    grpcOptions:
+      ssl-target-name-override: peer1-exporter-service
+      grpc.http2.keepalive_time: 15
+    
+    tlsCACerts:
+      path: /host/files/crypto-config/peerOrganizations/exporter/msp/tlscacerts/exporter-ca-7054.pem
+
+
 entityMatchers:
 
   peer:
@@ -172,6 +261,47 @@ entityMatchers:
       urlSubstitutionExp: peer1-carrier-service-service:7051
       sslTargetOverrideUrlSubstitutionExp: peer1-carrier-service-service
       mappedHost: peer1-carrier-service-service
+
+    - pattern: (\w*)peer0-importer-bank-service-service(\w*)
+      urlSubstitutionExp: peer0-importer-bank-service-service:9051
+      sslTargetOverrideUrlSubstitutionExp: peer0-importer-bank-service-service
+      mappedHost: peer0-importer-bank-service-service
+
+    - pattern: (\w*)peer1-importer-bank-service-service(\w*)
+      urlSubstitutionExp: peer1-importer-bank-service-service:10051
+      sslTargetOverrideUrlSubstitutionExp: peer1-importer-bank-service-service
+      mappedHost: peer1-importer-bank-service-service
+
+    - pattern: (\w*)peer0-exporter-bank-service-service(\w*)
+      urlSubstitutionExp: peer0-exporter-bank-service-service:9051
+      sslTargetOverrideUrlSubstitutionExp: peer0-exporter-bank-service-service
+      mappedHost: peer0-exporter-bank-service-service
+
+    - pattern: (\w*)peer1-exporter-bank-service-service(\w*)
+      urlSubstitutionExp: peer1-exporter-bank-service-service:10051
+      sslTargetOverrideUrlSubstitutionExp: peer1-exporter-bank-service-service
+      mappedHost: peer1-exporter-bank-service-service
+
+    - pattern: (\w*)peer0-importer-service-service(\w*)
+      urlSubstitutionExp: peer0-importer-service-service:9051
+      sslTargetOverrideUrlSubstitutionExp: peer0-importer-service-service
+      mappedHost: peer0-importer-service-service
+
+    - pattern: (\w*)peer1-importer-service-service(\w*)
+      urlSubstitutionExp: peer1-importer-service-service:10051
+      sslTargetOverrideUrlSubstitutionExp: peer1-importer-service-service
+      mappedHost: peer1-importer-service-service
+
+    - pattern: (\w*)peer0-exporter-service-service(\w*)
+      urlSubstitutionExp: peer0-exporter-service-service:9051
+      sslTargetOverrideUrlSubstitutionExp: peer0-exporter-service-service
+      mappedHost: peer0-exporter-service-service
+
+    - pattern: (\w*)peer1-exporter-service-service(\w*)
+      urlSubstitutionExp: peer1-exporter-service-service:10051
+      sslTargetOverrideUrlSubstitutionExp: peer1-exporter-service-service
+      mappedHost: peer1-exporter-service-service
+
 
   orderer:
     - pattern: (\w*)orderer0-service(\w*)
