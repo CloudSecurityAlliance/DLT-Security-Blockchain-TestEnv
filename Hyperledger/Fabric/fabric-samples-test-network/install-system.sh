@@ -77,11 +77,11 @@ curl https://raw.githubusercontent.com/hyperledger/fabric/master/scripts/bootstr
 chmod +x bootstrap.sh
 
 echo ""
-echo "Please run /opt/hyperledger/bootstrap.sh [version]"
+echo "Please run bootstrap.sh [version] from within the /opt/hyperledger/ directory"
 echo ""
-echo "Such as: /opt/hyperledger/bootstrap.sh 2.2.0"
+echo "Such as: cd /opt/hyperledger/; ./bootstrap.sh 2.2.0"
 echo ""
-echo "Then run the /opt/hyperledger/3-node-chain-start.sh to start it"
-echo "And the /opt/hyperledger/3-node-chain-stop.sh to stop it"
+echo "Then run the cd /opt/hyperledger/; ./3-node-chain-start.sh to start it"
+echo "And the cd /opt/hyperledger/; ./3-node-chain-stop.sh to stop it"
 echo ""
 echo "Also remmeber to log out and back in so that commands like \"peer\" work"
