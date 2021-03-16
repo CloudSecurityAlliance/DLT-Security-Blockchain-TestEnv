@@ -73,9 +73,16 @@ EOF
 chmod +x /opt/hyperledger/3-node-chain-stop.sh
 
 echo "getting bootstrap.sh script"
-curl https://raw.githubusercontent.com/hyperledger/fabric/master/scripts/bootstrap.sh > bootstrap.sh
+# Original:
+#curl https://raw.githubusercontent.com/hyperledger/fabric/master/scripts/bootstrap.sh > bootstrap.sh
+# This version pulls KurtSeifried's fork:
+curl https://raw.githubusercontent.com/cloudsecurityalliance/DLT-Security-Blockchain-TestEnv/master/Hyperledger/Fabric/fabric-samples-test-network/bootstrap.sh > bootstrap.sh
 chmod +x bootstrap.sh
 
+echo ""
+echo "You may need to update docker-compose to 1.28.5 or later:"
+echo ""
+echo "curl -L https://github.com/docker/compose/releases/download/1.28.5/docker-compose-`uname -s`-`uname -m` -o /usr/bin/docker-compose"
 echo ""
 echo "Please run bootstrap.sh [version] from within the /opt/hyperledger/ directory"
 echo ""
