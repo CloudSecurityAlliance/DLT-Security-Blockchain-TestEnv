@@ -6,6 +6,8 @@
 # You can get this script via
 # https://raw.githubusercontent.com/cloudsecurityalliance/DLT-Security-Blockchain-TestEnv/master/Hyperledger/Fabric/fabric-samples-test-network/install-system.sh
 #
+# This script uses a forked version of bootstrap.sh and fabric-samples
+#
 
 #
 # Update the system
