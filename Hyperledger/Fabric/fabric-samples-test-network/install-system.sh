@@ -67,11 +67,14 @@ cat <<'EOF' >> /opt/hyperledger/3-node-chain-start.sh
 # This has to run from the directory due to local file paths
 #
 cd /opt/hyperledger/fabric-samples/test-network
-./network.sh up
 # defaults to "mychannel", this is mandatory as the addOrg3 scripts expects mychannel to exist
-./network.sh createChannel
-cd addOrg3/
+./network.sh up
+#
+cd /opt/hyperledger/fabric-samples/test-network/addOrg3/
 ./addOrg3.sh up
+#
+cd /opt/hyperledger/fabric-samples/test-network/addOrg4/
+./addOrg4.sh up
 EOF
 chmod +x /opt/hyperledger/3-node-chain-start.sh
 
