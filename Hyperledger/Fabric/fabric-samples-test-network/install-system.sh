@@ -3,13 +3,16 @@
 # Copyright Kurt Seifried kseifried@cloudsecurityalliance.org CloudSecurityAlliance 2021
 # License: Apache 2.0
 #
+echo "THIS ONLY INSTALLS HYPERLEDGER FABRIC CURRENT (2.3.1 as of 2021-03-16)"
+#
+# Getting 2.2.0 and older to work means making a lot of changes. You're welcome to do so (submit a PR to the branch 2.2.0).
+#
 # You can get this script via
 # curl https://raw.githubusercontent.com/cloudsecurityalliance/DLT-Security-Blockchain-TestEnv/master/Hyperledger/Fabric/fabric-samples-test-network/install-system.sh > install-system.sh
-# chmod +x install-system.sh 
+# chmod +x install-system.sh
 #
 # This script uses a forked version of bootstrap.sh and fabric-samples
 #
-
 #
 # Update the system
 #
@@ -29,6 +32,14 @@ ln -s /run/systemd/resolve/resolv.conf /etc/resolv.conf
 #
 echo "Adding dependancies"
 apt-get -y install curl git docker.io docker-compose nodejs npm python golang
+
+#
+# Docker compose is 1.25 which is to old, we need 1.28 or later:
+#
+echo "Updating docker-compose to 1.28.5:"
+curl -L https://github.com/docker/compose/releases/download/1.28.5/docker-compose-`uname -s`-`uname -m` -o /usr/bin/docker-compose
+
+
 
 echo "Making directory /opt/hyperledger"
 mkdir /opt/hyperledger
@@ -82,14 +93,11 @@ echo "getting bootstrap.sh script"
 curl https://raw.githubusercontent.com/cloudsecurityalliance/DLT-Security-Blockchain-TestEnv/master/Hyperledger/Fabric/fabric-samples-test-network/bootstrap.sh > bootstrap.sh
 chmod +x bootstrap.sh
 
-echo ""
-echo "You may need to update docker-compose to 1.28.5 or later:"
-echo ""
-echo "curl -L https://github.com/docker/compose/releases/download/1.28.5/docker-compose-`uname -s`-`uname -m` -o /usr/bin/docker-compose"
-echo ""
-echo "Please run bootstrap.sh [version] from within the /opt/hyperledger/ directory"
-echo ""
-echo "Such as: cd /opt/hyperledger/; ./bootstrap.sh 2.2.0"
+echo "Running bootstrap.sh /opt/hyperledger/ directory"
+
+cd /opt/hyperledger/
+./bootstrap.sh
+
 echo ""
 echo "Then run the cd /opt/hyperledger/; ./3-node-chain-start.sh to start it"
 echo "And the cd /opt/hyperledger/; ./3-node-chain-stop.sh to stop it"
