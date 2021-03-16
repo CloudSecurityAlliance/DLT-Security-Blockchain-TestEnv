@@ -90,6 +90,7 @@ echo "getting bootstrap.sh script"
 # Original:
 #curl https://raw.githubusercontent.com/hyperledger/fabric/master/scripts/bootstrap.sh > bootstrap.sh
 # This version pulls KurtSeifried's fork:
+cd /opt/hyperledger
 curl https://raw.githubusercontent.com/cloudsecurityalliance/DLT-Security-Blockchain-TestEnv/master/Hyperledger/Fabric/fabric-samples-test-network/bootstrap.sh > bootstrap.sh
 chmod +x bootstrap.sh
 
