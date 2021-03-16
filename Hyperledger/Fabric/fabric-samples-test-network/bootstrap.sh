@@ -66,11 +66,7 @@ cloneSamplesRepo() {
 
     if GIT_DIR=.git git rev-parse v${VERSION} >/dev/null 2>&1; then
         echo "===> Checking out v${VERSION} of kurtseifried/fabric-samples"
-
-#        git checkout -q v${VERSION}
-# Just always get master no mater what, this will probablty break 1.xm but we're only interested in 2.2.0 and later.
-#
-        git checkout -q master
+        git checkout -q v${VERSION}
     else
         echo "fabric-samples v${VERSION} does not exist, defaulting master"
         git checkout -q master
