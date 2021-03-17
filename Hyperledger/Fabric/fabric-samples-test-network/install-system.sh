@@ -72,10 +72,16 @@ cd /opt/hyperledger/fabric-samples/test-network
 ./network.sh createChannel -c mychannel
 #
 cd /opt/hyperledger/fabric-samples/test-network/addOrg3/
-./addOrg3.sh up
+./addOrg3.sh up -c mychannel
 #
 cd /opt/hyperledger/fabric-samples/test-network/addOrg4/
-./addOrg4.sh up
+./addOrg4.sh up -c mychannel
+#
+cd /opt/hyperledger/fabric-samples/test-network/addOrg5/
+./addOrg5.sh up -c mychannel
+#
+cd /opt/hyperledger/fabric-samples/test-network/addOrg6/
+./addOrg6.sh up -c mychannel
 EOF
 chmod +x /opt/hyperledger/3-node-chain-start.sh
 
