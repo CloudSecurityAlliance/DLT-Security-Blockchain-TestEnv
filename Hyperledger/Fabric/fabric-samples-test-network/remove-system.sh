@@ -27,3 +27,7 @@ docker volume prune -f
 # Remove all containers/builds/etc
 #
 docker system prune -a -f
+#
+# Remove the source dir
+#
+rm -rf /opt/hyperledger/
