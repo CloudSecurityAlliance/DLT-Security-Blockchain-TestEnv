@@ -69,6 +69,7 @@ cat <<'EOF' >> /opt/hyperledger/3-node-chain-start.sh
 cd /opt/hyperledger/fabric-samples/test-network
 # defaults to "mychannel", this is mandatory as the addOrg3 scripts expects mychannel to exist
 ./network.sh up
+./network.sh createChannel -c mychannel
 #
 cd /opt/hyperledger/fabric-samples/test-network/addOrg3/
 ./addOrg3.sh up
@@ -106,4 +107,4 @@ echo ""
 echo "Then run the cd /opt/hyperledger/; ./3-node-chain-start.sh to start it"
 echo "And the cd /opt/hyperledger/; ./3-node-chain-stop.sh to stop it"
 echo ""
-echo "Also remmeber to log out and back in so that commands like \"peer\" work"
+echo "Also remember to log out and back in so that commands like \"peer\" work"
