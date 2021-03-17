@@ -1,6 +1,6 @@
 These are some scripts and hints on getting the Hyperledger Fabric fabric-samples test-network setup on an Ubuntu system.
 
-This uses the repo: https://github.com/kurtseifried/fabric-samples for the scipts
+This uses the repo: https://github.com/kurtseifried/fabric-samples for the scripts
 
 This uses the repo: https://github.com/hyperledger/fabric-samples for the binaries
 
