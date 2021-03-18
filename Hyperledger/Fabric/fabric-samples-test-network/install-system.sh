@@ -67,8 +67,18 @@ cat <<'EOF' >> /opt/hyperledger/3-node-chain-start.sh
 # This has to run from the directory due to local file paths
 #
 cd /opt/hyperledger/fabric-samples/test-network
+#
+# Funny story: Blockchain networks vote on things to allow them (or not). So with 2 Orgs voting you can add a third and fourth Org to a channel (2:0, 2:1, so a majority)
+# But you can't add a fifth Org (2 for, 2 not for, no majority). So for now just chuck them into mychannel2 while we figure out 
+# https://hyperledger-fabric.readthedocs.io/en/release-2.3/channel_update_tutorial.html
+#
 # defaults to "mychannel", this is mandatory as the addOrg3 scripts expects mychannel to exist
+#
 ./network.sh up createChannel -c mychannel
+#
+# Create a second channel to add Org5 and Org6 to
+#
+./network.sh createChannel -c mychannel2
 #
 cd /opt/hyperledger/fabric-samples/test-network/addOrg3/
 ./addOrg3.sh up -c mychannel
@@ -77,10 +87,10 @@ cd /opt/hyperledger/fabric-samples/test-network/addOrg4/
 ./addOrg4.sh up -c mychannel
 #
 cd /opt/hyperledger/fabric-samples/test-network/addOrg5/
-./addOrg5.sh up -c mychannel
+./addOrg5.sh up -c mychannel2
 #
 cd /opt/hyperledger/fabric-samples/test-network/addOrg6/
-./addOrg6.sh up -c mychannel
+./addOrg6.sh up -c mychannel2
 EOF
 chmod +x /opt/hyperledger/3-node-chain-start.sh
 
