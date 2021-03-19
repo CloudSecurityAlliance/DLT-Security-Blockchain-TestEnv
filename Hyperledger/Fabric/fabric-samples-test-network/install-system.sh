@@ -76,10 +76,6 @@ cd /opt/hyperledger/fabric-samples/test-network
 #
 ./network.sh up createChannel -c mychannel
 #
-# Create a second channel to add Org5 and Org6 to
-#
-./network.sh createChannel -c mychannel2
-#
 cd /opt/hyperledger/fabric-samples/test-network/addOrg3/
 ./addOrg3.sh up -c mychannel
 #
@@ -87,10 +83,10 @@ cd /opt/hyperledger/fabric-samples/test-network/addOrg4/
 ./addOrg4.sh up -c mychannel
 #
 cd /opt/hyperledger/fabric-samples/test-network/addOrg5/
-./addOrg5.sh up -c mychannel2
+./addOrg5.sh up -c mychannel
 #
 cd /opt/hyperledger/fabric-samples/test-network/addOrg6/
-./addOrg6.sh up -c mychannel2
+./addOrg6.sh up -c mychannel
 EOF
 chmod +x /opt/hyperledger/3-node-chain-start.sh
 
