@@ -60,8 +60,8 @@ export CORE_PEER_MSPCONFIGPATH=/opt/hyperledger/fabric-samples/test-network/orga
 export CORE_PEER_ADDRESS=localhost:7051
 EOF
 
-echo "Setting up /opt/hyperledger/3-node-chain-start.sh"
-cat <<'EOF' >> /opt/hyperledger/3-node-chain-start.sh
+echo "Setting up /opt/hyperledger/6-node-chain-start.sh"
+cat <<'EOF' >> /opt/hyperledger/6-node-chain-start.sh
 #!/bin/bash
 #
 # This has to run from the directory due to local file paths
@@ -88,18 +88,18 @@ cd /opt/hyperledger/fabric-samples/test-network/addOrg5/
 cd /opt/hyperledger/fabric-samples/test-network/addOrg6/
 ./addOrg6.sh up -c mychannel
 EOF
-chmod +x /opt/hyperledger/3-node-chain-start.sh
+chmod +x /opt/hyperledger/6-node-chain-start.sh
 
-echo "Setting up /opt/hyperledger/3-node-chain-stop.sh"
-cat <<'EOF' >> /opt/hyperledger/3-node-chain-stop.sh
+echo "Setting up /opt/hyperledger/6-node-chain-stop.sh"
+cat <<'EOF' >> /opt/hyperledger/6-node-chain-stop.sh
 #!/bin/bash
 #
-# Stop it from the addOrg3 script
+# Stop it from the addOrg6 script
 #
-cd /opt/hyperledger/fabric-samples/test-network/addOrg3
-./addOrg3.sh down
+cd /opt/hyperledger/fabric-samples/test-network/addOrg6
+./addOrg6.sh down
 EOF
-chmod +x /opt/hyperledger/3-node-chain-stop.sh
+chmod +x /opt/hyperledger/6-node-chain-stop.sh
 
 echo "getting bootstrap.sh script"
 # Original:
@@ -115,7 +115,7 @@ cd /opt/hyperledger/
 ./bootstrap.sh
 
 echo ""
-echo "Then run the cd /opt/hyperledger/; ./3-node-chain-start.sh to start it"
-echo "And the cd /opt/hyperledger/; ./3-node-chain-stop.sh to stop it"
+echo "Then run the cd /opt/hyperledger/; ./6-node-chain-start.sh to start it"
+echo "And the cd /opt/hyperledger/; ./6-node-chain-stop.sh to stop it"
 echo ""
 echo "Also remember to log out and back in so that commands like \"peer\" work"
