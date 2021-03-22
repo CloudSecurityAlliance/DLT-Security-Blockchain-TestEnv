@@ -87,6 +87,12 @@ cd /opt/hyperledger/fabric-samples/test-network/addOrg5/
 #
 cd /opt/hyperledger/fabric-samples/test-network/addOrg6/
 ./addOrg6.sh up -c mychannel
+
+#
+# Create conf.yaml for discover:
+#
+discover --configFile /opt/hyperledger/fabric-samples/config/conf.yaml --peerTLSCA /opt/hyperledger/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/users/User1@org1.example.com/tls/ca.crt --userKey /opt/hyperledger/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/users/User1@org1.example.com/msp/keystore/priv_sk --userCert /opt/hyperledger/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/users/User1@org1.example.com/msp/signcerts/User1@org1.example.com-cert.pem  --MSP Org1MSP saveConfig
+
 EOF
 chmod +x /opt/hyperledger/6-node-chain-start.sh
 
