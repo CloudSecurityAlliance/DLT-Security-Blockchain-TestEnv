@@ -16,6 +16,10 @@ echo "THIS ONLY INSTALLS HYPERLEDGER FABRIC CURRENT (2.3.1 as of 2021-03-16)"
 #
 # Update the system
 #
+echo "Original URL: https://raw.githubusercontent.com/cloudsecurityalliance/DLT-Security-Blockchain-TestEnv/master/Hyperledger/Fabric/fabric-samples-test-network/install-system.sh"
+echo "Copyright CloudSecurityAlliance 2021"
+echo "Written by Kurt Seifried kseifried@cloudsecurityalliance.org"
+sleep 5
 echo "Updating system"
 apt-get update
 apt-get -y upgrade
