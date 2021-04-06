@@ -5,3 +5,5 @@ This uses the repo: https://github.com/kurtseifried/fabric-samples for the scrip
 This uses the repo: https://github.com/hyperledger/fabric-samples for the binaries
 
 And a slight fork of the script: https://github.com/hyperledger/fabric/blob/master/scripts/bootstrap.sh (it uses my repo for the scripts).
+
+Download, chmod +x the install-system.sh and run it to get started.
