@@ -26,7 +26,7 @@ mkdir /var/lib/docker/
 DIR_HYPER=`df -m /opt/hyperledger/ --output=avail | grep "[0-9]"`
 DIR_DOCKER=`df -m /var/lib/docker/ --output=avail | grep "[0-9]"`
 
-if (( $DIR_HYPER > 1024 && $DIR_DOCKER > 2048 )); then
+if [ $DIR_HYPER -lt 1024 ] && [ $DIR_DOCKER -lt 2048 ]; then
     echo "Not enough space found in  /opt/hyperledger/ and/or  /var/lib/docker/"
 else
     echo "Found enough free space, continuing"
