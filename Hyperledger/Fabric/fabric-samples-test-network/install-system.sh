@@ -18,6 +18,11 @@ fi
 # Check for free disk space
 # /opt/hyperledger (1 gig) and /var/lib/docker/ (2 gigs)
 #
+echo "Making directory /opt/hyperledger"
+mkdir /opt/hyperledger
+echo "Making directory /var/lib/docker/"
+mkdir /var/lib/docker/
+#
 DIR_HYPER=`df -m /opt/hyperledger/ --output=avail | grep "[0-9]"`
 DIR_DOCKER=`df -m /var/lib/docker/ --output=avail | grep "[0-9]"`
 
@@ -66,10 +71,6 @@ apt-get -y install curl git docker.io docker-compose nodejs npm python golang
 echo "Updating docker-compose to 1.28.5:"
 curl -L https://github.com/docker/compose/releases/download/1.28.5/docker-compose-`uname -s`-`uname -m` -o /usr/bin/docker-compose
 
-
-
-echo "Making directory /opt/hyperledger"
-mkdir /opt/hyperledger
 cd /opt/hyperledger
 
 echo "Setting up root paths for Hyperledger commands (log out and back in for it to work)"
