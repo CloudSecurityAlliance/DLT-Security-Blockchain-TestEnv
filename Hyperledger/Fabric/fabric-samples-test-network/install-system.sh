@@ -15,6 +15,19 @@ else
     exit
 fi
 #
+# Check for free disk space
+# /opt/hyperledger (1 gig) and /var/lib/docker/ (2 gigs)
+#
+DIR_HYPER=`df -m /opt/hyperledger/ --output=avail | grep "[0-9]"`
+DIR_DOCKER=`df -m /var/lib/docker/ --output=avail | grep "[0-9]"`
+
+if (( $DIR_HYPER > 1024 && $DIR_DOCKER > 2048 )); then
+    echo "Not enough space found in  /opt/hyperledger/ and/or  /var/lib/docker/"
+else
+    echo "Found enough free space, continuing"
+fi
+#
+#
 # Getting 2.2.0 and older to work means making a lot of changes. You're welcome to do so (submit a PR to the branch 2.2.0).
 #
 # You can get this script via
