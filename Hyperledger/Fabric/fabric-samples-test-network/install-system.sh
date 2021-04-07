@@ -3,7 +3,17 @@
 # Copyright Kurt Seifried kseifried@cloudsecurityalliance.org CloudSecurityAlliance 2021
 # License: Apache 2.0
 #
-echo "THIS ONLY INSTALLS HYPERLEDGER FABRIC CURRENT (2.3.1 as of 2021-03-16)"
+echo "THIS ONLY INSTALLS HYPERLEDGER FABRIC CURRENT (2.3.1 as of 2021-03-16) on Ubuntu"
+#
+# Check for Ubuntu
+#
+RELEASE=`lsb_release -i`
+if [[ $RELEASE =~ .*Ubuntu$ ]]; then
+    echo "Ubuntu detected, continuing"
+else
+    echo "This only works reliably on Ubuntu. You can manually edit this check to bypass it (for e.g. Debian)."
+    exit
+fi
 #
 # Getting 2.2.0 and older to work means making a lot of changes. You're welcome to do so (submit a PR to the branch 2.2.0).
 #
