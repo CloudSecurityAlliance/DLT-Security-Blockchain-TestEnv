@@ -106,7 +106,7 @@ cd /opt/hyperledger/fabric-samples/test-network
 #
 # defaults to "mychannel", this is mandatory as the addOrg3 scripts expects mychannel to exist
 #
-./network.sh up createChannel -c mychannel -ca
+./network.sh up createChannel -c mychannel
 #
 cd /opt/hyperledger/fabric-samples/test-network/addOrg3/
 ./addOrg3.sh up -c mychannel
