@@ -106,26 +106,28 @@ cd /opt/hyperledger/fabric-samples/test-network
 #
 # defaults to "mychannel", this is mandatory as the addOrg3 scripts expects mychannel to exist
 #
-./network.sh up createChannel -c mychannel
+./network.sh up createChannel -c mychannel -ca
 #
 cd /opt/hyperledger/fabric-samples/test-network/addOrg3/
-./addOrg3.sh up -c mychannel
+./addOrg3.sh up -c mychannel -ca
 #
 cd /opt/hyperledger/fabric-samples/test-network/addOrg4/
-./addOrg4.sh up -c mychannel
+./addOrg4.sh up -c mychannel -ca
 #
 cd /opt/hyperledger/fabric-samples/test-network/addOrg5/
-./addOrg5.sh up -c mychannel
+./addOrg5.sh up -c mychannel -ca
 #
 cd /opt/hyperledger/fabric-samples/test-network/addOrg6/
-./addOrg6.sh up -c mychannel
+./addOrg6.sh up -c mychannel -ca
 
 #
 # BINARY: discover
 #
 # Create conf.yaml for discover:
 #
-discover --configFile /opt/hyperledger/fabric-samples/config/conf.yaml --peerTLSCA /opt/hyperledger/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/users/User1@org1.example.com/tls/ca.crt --userKey /opt/hyperledger/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/users/User1@org1.example.com/msp/keystore/priv_sk --userCert /opt/hyperledger/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/users/User1@org1.example.com/msp/signcerts/User1@org1.example.com-cert.pem  --MSP Org1MSP saveConfig
+# This is currently broken due to use of CA. Need to extract the certs for discover to work.
+# 
+#discover --configFile /opt/hyperledger/fabric-samples/config/conf.yaml --peerTLSCA /opt/hyperledger/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/users/User1@org1.example.com/tls/ca.crt --userKey /opt/hyperledger/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/users/User1@org1.example.com/msp/keystore/priv_sk --userCert /opt/hyperledger/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/users/User1@org1.example.com/msp/signcerts/User1@org1.example.com-cert.pem  --MSP Org1MSP saveConfig
 #
 # How to run the discover command:
 # discover --configFile /opt/hyperledger/fabric-samples/config/conf.yaml peers --channel mychannel  --server localhost:7051
