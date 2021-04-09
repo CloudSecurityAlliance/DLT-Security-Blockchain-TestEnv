@@ -83,12 +83,19 @@ export CORE_PEER_TLS_ROOTCERT_FILE=/opt/hyperledger/fabric-samples/test-network/
 export CORE_PEER_MSPCONFIGPATH=/opt/hyperledger/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp
 export CORE_PEER_ADDRESS=localhost:7051
 #
+# discover command alias
+#
 alias csa_discover="discover --configFile /opt/hyperledger/fabric-samples/config/conf.yaml peers --channel mychannel  --server localhost:7051"
 #
 # BINARY: peer
 #
 export ORDERER_CA="/opt/hyperledger/fabric-samples/test-network/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem"
+#
+# Stuff for cicero
+#
+export HLF_INSTALL_DIR=/opt/hyperledger/fabric-samples
 EOF
+
 
 echo "Setting up /opt/hyperledger/6-node-chain-start.sh"
 cat <<'EOF' >> /opt/hyperledger/6-node-chain-start.sh
