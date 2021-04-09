@@ -2,6 +2,9 @@
 #
 # https://github.com/accordproject/hlf-cicero-contract
 #
+# curl https://raw.githubusercontent.com/cloudsecurityalliance/DLT-Security-Blockchain-TestEnv/master/Hyperledger/Fabric/hlf-cicero-contract/csa-install-hlf-cicero-contract.sh > csa-install-hlf-cicero-contract.sh
+# chmod +x csa-install-hlf-cicero-contract.s
+#
 # Added in our install-system.sh script
 #
 #export HLF_INSTALL_DIR=/opt/hyperledger/fabric-samples
