@@ -166,8 +166,8 @@ peer lifecycle chaincode commit -o localhost:7050 \
      --tls --cafile ${HLF_TEST_NETWORK}/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem \
      --peerAddresses localhost:7051 --tlsRootCertFiles ${HLF_TEST_NETWORK}/organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt \
      --peerAddresses localhost:9051 --tlsRootCertFiles ${HLF_TEST_NETWORK}/organizations/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt \
-     --peerAddresses localhost:11051 --tlsRootCertFiles ${HLF_TEST_NETWORK}/organizations/peerOrganizations/org3.example.com/peers/peer0.org2.example.com/tls/ca.crt \
-     --peerAddresses localhost:13051 --tlsRootCertFiles ${HLF_TEST_NETWORK}/organizations/peerOrganizations/org4.example.com/peers/peer0.org2.example.com/tls/ca.crt \
-     --peerAddresses localhost:15051 --tlsRootCertFiles ${HLF_TEST_NETWORK}/organizations/peerOrganizations/org5.example.com/peers/peer0.org2.example.com/tls/ca.crt \
-     --peerAddresses localhost:17051 --tlsRootCertFiles ${HLF_TEST_NETWORK}/organizations/peerOrganizations/org6.example.com/peers/peer0.org2.example.com/tls/ca.crt
+     --peerAddresses localhost:11051 --tlsRootCertFiles ${HLF_TEST_NETWORK}/organizations/peerOrganizations/org3.example.com/peers/peer0.org3.example.com/tls/ca.crt \
+     --peerAddresses localhost:13051 --tlsRootCertFiles ${HLF_TEST_NETWORK}/organizations/peerOrganizations/org4.example.com/peers/peer0.org4.example.com/tls/ca.crt \
+     --peerAddresses localhost:15051 --tlsRootCertFiles ${HLF_TEST_NETWORK}/organizations/peerOrganizations/org5.example.com/peers/peer0.org5.example.com/tls/ca.crt \
+     --peerAddresses localhost:17051 --tlsRootCertFiles ${HLF_TEST_NETWORK}/organizations/peerOrganizations/org6.example.com/peers/peer0.org6.example.com/tls/ca.crt
 echo "chaincode committed"
