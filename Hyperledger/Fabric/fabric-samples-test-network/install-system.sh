@@ -125,11 +125,24 @@ cd /opt/hyperledger/fabric-samples/test-network/addOrg6/
 #
 # Create conf.yaml for discover:
 #
-# This is currently broken due to use of CA. Need to extract the certs for discover to work.
+# Use the below if you are using local certificate files:
 # 
 #discover --configFile /opt/hyperledger/fabric-samples/config/conf.yaml --peerTLSCA /opt/hyperledger/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/users/User1@org1.example.com/tls/ca.crt --userKey /opt/hyperledger/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/users/User1@org1.example.com/msp/keystore/priv_sk --userCert /opt/hyperledger/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/users/User1@org1.example.com/msp/signcerts/User1@org1.example.com-cert.pem  --MSP Org1MSP saveConfig
 #
+# Use the below if you are using the CA (-ca) switch, the default now, please note you MUST change the keystore values. 
+#
+DISCOVER_PEERTLSCA=/opt/hyperledger/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt
+#
+# There should only be one file in this directory, if not this will fail
+#
+DISCOVER_USERKEY=/opt/hyperledger/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/users/User1@org1.example.com/msp/keystore/*_sk
+#
+DISCOVER_USERCERT=/opt/hyperledger/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/users/User1@org1.example.com/msp/signcerts/cert.pem
+#
+discover --configFile /opt/hyperledger/fabric-samples/config/conf.yaml --peerTLSCA $DISCOVER_PEERTLSCA --userKey $DISCOVER_USERKEY --userCert $DISCOVER_USERCERT --MSP Org1MSP saveConfig
+#
 # How to run the discover command:
+#
 # discover --configFile /opt/hyperledger/fabric-samples/config/conf.yaml peers --channel mychannel  --server localhost:7051
 #
 
