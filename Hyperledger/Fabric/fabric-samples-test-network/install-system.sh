@@ -3,6 +3,12 @@
 # Copyright Kurt Seifried kseifried@cloudsecurityalliance.org CloudSecurityAlliance 2021
 # License: Apache 2.0
 #
+# You can get this script via
+# curl https://raw.githubusercontent.com/cloudsecurityalliance/DLT-Security-Blockchain-TestEnv/master/Hyperledger/Fabric/fabric-samples-test-network/install-system.sh > install-system.sh
+# chmod +x install-system.sh
+#
+# This script uses a forked version of bootstrap.sh and fabric-samples
+#
 echo "THIS ONLY INSTALLS HYPERLEDGER FABRIC CURRENT (2.3.1 as of 2021-03-16) on Ubuntu"
 #
 # Check for Ubuntu
@@ -31,16 +37,6 @@ if [ $DIR_HYPER -lt 1024 ] && [ $DIR_DOCKER -lt 2048 ]; then
 else
     echo "Found enough free space, continuing"
 fi
-#
-#
-# Getting 2.2.0 and older to work means making a lot of changes. You're welcome to do so (submit a PR to the branch 2.2.0).
-#
-# You can get this script via
-# curl https://raw.githubusercontent.com/cloudsecurityalliance/DLT-Security-Blockchain-TestEnv/master/Hyperledger/Fabric/fabric-samples-test-network/install-system.sh > install-system.sh
-# chmod +x install-system.sh
-#
-# This script uses a forked version of bootstrap.sh and fabric-samples
-#
 #
 # Update the system
 #
