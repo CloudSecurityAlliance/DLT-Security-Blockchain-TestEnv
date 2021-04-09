@@ -3,7 +3,7 @@
 # Copyright Kurt Seifried kseifried@cloudsecurityalliance.org CloudSecurityAlliance 2021
 # License: Apache 2.0
 #
-# curl https://raw.githubusercontent.com/cloudsecurityalliance/DLT-Security-Blockchain-TestEnv/master/Hyperledger/Fabric/fabric-samples-test-network/remove-system.sh > remove-system.sh
+# curl https://raw.githubusercontent.com/cloudsecurityalliance/DLT-Security-Blockchain-TestEnv/master/Hyperledger/Fabric/fabric-samples-test-network/csa-remove-hyperledger-fabric-system.sh > csa-remove-hyperledger-fabric-system.sh
 #
 echo "HIT CTRL-C NOW ID YOU DIDN'T MEAN TO RUN THIS"
 echo "5"
