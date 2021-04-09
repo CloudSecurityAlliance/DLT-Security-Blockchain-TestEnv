@@ -83,6 +83,8 @@ export CORE_PEER_TLS_ROOTCERT_FILE=/opt/hyperledger/fabric-samples/test-network/
 export CORE_PEER_MSPCONFIGPATH=/opt/hyperledger/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp
 export CORE_PEER_ADDRESS=localhost:7051
 #
+alias csa_discover="discover --configFile /opt/hyperledger/fabric-samples/config/conf.yaml peers --channel mychannel  --server localhost:7051"
+#
 # BINARY: peer
 #
 export ORDERER_CA="/opt/hyperledger/fabric-samples/test-network/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem"
