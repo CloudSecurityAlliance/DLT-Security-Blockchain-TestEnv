@@ -3,7 +3,8 @@
 # Copyright Kurt Seifried kseifried@cloudsecurityalliance.org CloudSecurityAlliance 2021
 # License: Apache 2.0
 #
-echo "THIS REMOVES ALL DOCKER IMAGES, VOLUMES and /opt/hyperledger/"
+# curl https://raw.githubusercontent.com/cloudsecurityalliance/DLT-Security-Blockchain-TestEnv/master/Hyperledger/Fabric/fabric-samples-test-network/remove-system.sh > remove-system.sh
+#
 echo "HIT CTRL-C NOW ID YOU DIDN'T MEAN TO RUN THIS"
 echo "5"
 sleep 1
@@ -30,4 +31,5 @@ docker system prune -a -f
 #
 # Remove the source dir
 #
-rm -rf /opt/hyperledger/
+rm -rf /opt/hyperledger/*.sh
+rm -rf /opt/hyperledger/fabric-samples/
