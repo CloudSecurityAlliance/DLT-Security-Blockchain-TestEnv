@@ -4,8 +4,8 @@
 # License: Apache 2.0
 #
 # You can get this script via
-# curl
-# chmod +x
+# curl https://raw.githubusercontent.com/cloudsecurityalliance/DLT-Security-Blockchain-TestEnv/master/Corda/samples-java/csa-install-corda-samples-java-basiccordapp.sh > csa-install-corda-samples-java-basiccordapp.sh
+# chmod +x csa-install-corda-samples-java-basiccordapp.sh
 #
 # This script uses a forked version of samples-java
 #
