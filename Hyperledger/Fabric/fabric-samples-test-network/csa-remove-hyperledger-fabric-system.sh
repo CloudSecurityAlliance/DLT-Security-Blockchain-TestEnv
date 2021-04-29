@@ -5,7 +5,7 @@
 #
 # curl https://raw.githubusercontent.com/cloudsecurityalliance/DLT-Security-Blockchain-TestEnv/master/Hyperledger/Fabric/fabric-samples-test-network/csa-remove-hyperledger-fabric-system.sh > csa-remove-hyperledger-fabric-system.sh
 #
-echo "HIT CTRL-C NOW ID YOU DIDN'T MEAN TO RUN THIS"
+echo "HIT CTRL-C NOW IF YOU DIDN'T MEAN TO RUN THIS"
 echo "5"
 sleep 1
 echo "4"
