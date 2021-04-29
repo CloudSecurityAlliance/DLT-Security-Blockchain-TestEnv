@@ -74,7 +74,7 @@ Install:
 run git bash
 
 ```
-cd /c/corda/samples-java/CBasic/cordapp-example/build/nodes/
+cd /c/corda/samples-java/Basic/cordapp-example/build/nodes/
 ./runmodes.bat
 ```
 
