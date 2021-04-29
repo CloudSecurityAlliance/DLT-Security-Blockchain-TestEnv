@@ -62,7 +62,7 @@ Install:
 run git bash  
 
 ```
-cd /c/corda/samples-java/CBasic/cordapp-example/  
+cd /c/corda/samples-java/Basic/cordapp-example/  
 ./gradlew.bat deployNodes
 ```
 
