@@ -25,9 +25,9 @@ fi
 # Check for free disk space
 # /opt/gradle (1 gig) and /opt/corda/ (2 gigs)
 #
-echo "Making directory /opt/hyperledger"
+echo "Making directory /opt/gradle"
 mkdir /opt/gradle
-echo "Making directory /var/lib/docker/"
+echo "Making directory /opt/corda"
 mkdir /opt/corda
 #
 DIR_GRADLE=`df -m /opt/gradle/ --output=avail | grep "[0-9]"`
@@ -61,7 +61,7 @@ unzip gradle-5.6.4-bin.zip
 #
 export PATH="$PATH:/opt/gradle/gradle-5.6.4/bin"
 
-echo "Setting up root paths for Hyperledger commands (log out and back in for it to work)"
+echo "Setting up root paths for Gradle command"
 cat << 'EOF' >> /root/.profile
 #
 # Add gradle to path
