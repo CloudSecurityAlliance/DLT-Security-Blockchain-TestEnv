@@ -56,6 +56,19 @@ git clone https://github.com/corda/samples-java
 ```
 Test: N/A
 
+## Changing Basic/cordaa-example to add 4 more parties
+
+Install:
+run git bash
+cd /c/corda/samples-java/Basic/cordapp-example/
+notepad.exe build.gradle
+
+Go to the final line and remove the last "}" and then add the following to the file:
+
+https://raw.githubusercontent.com/cloudsecurityalliance/DLT-Security-Blockchain-TestEnv/master/Corda/samples-java/Basic/cordapp-example/build.gradle-4-more-parties
+
+This defines 4 more parties.
+
 ## gradlew build
 
 Install:
