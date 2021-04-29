@@ -21,11 +21,11 @@ sleep 1
 #
 # Kill all the java processes
 #
-#ps xauww | grep "" |
+ps xauww  | grep net.corda.node.Corda | grep -v grep | cut -d" " -f7 | xargs kill
 #
 # Forcibly remove /opt/corda/samples-java/
 #
 rm -rf /opt/corda/samples-java/
 #
-# Leave gradle?
+# Leave gradle alone?
 #
