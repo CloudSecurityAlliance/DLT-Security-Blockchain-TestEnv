@@ -11,6 +11,7 @@
 #
 # Check for Ubuntu 18.04
 #
+
 PRETTY_NAME=`grep PRETTY_NAME /etc/os-release`
 
 if [[ $PRETTY_NAME =~ "PRETTY_NAME=\"Ubuntu 18.04.5 LTS\"" ]]; then
@@ -19,6 +20,7 @@ else
     echo "This only works reliably on Ubuntu. You can manually edit this check to bypass it (for e.g. Debian)."
     exit
 fi
+
 #
 # Check for free disk space
 # /opt/gradle (1 gig) and /opt/corda/ (2 gigs)
@@ -77,6 +79,35 @@ git clone https://github.com/corda/samples-java
 cd /opt/corda/samples-java/Basic/cordapp-example
 sed 's/localhost/0.0.0.0/' build.gradle > 2 ; mv -f 2 build.gradle
 #
+#
+# Set secure passwords:
+#
+PartyA_password=`head /dev/urandom | tr -dc A-Za-z0-9 | head -c10`
+PartyB_password=`head /dev/urandom | tr -dc A-Za-z0-9 | head -c10`
+#
+# This uses sed to change the first instance of "test", to "[random]", so the first one gets PartyA and the second one gets PartyB
+# Later we need to echo this, suggest we grep it from the build.gradle so we show what was actually used
+#
+cd /opt/corda/samples-java/Basic/cordapp-example
+
+sed "0,/\"test\",/s//\"$PartyA_password\",/" build.gradle > 2 ; mv -f 2 build.gradle
+sed "0,/\"test\",/s//\"$PartyB_password\",/" build.gradle > 2 ; mv -f 2 build.gradle
 # TODO: change username/password to something random?
 #
-./gradlew deployNodes
+./gradlew clean deployNodes
+
+#
+# Run the corda thing
+#
+cd /opt/corda/samples-java/Basic/cordapp-example/build/nodes/
+./runnodes
+#
+# Sleep for 20 seconds to let the server stuff start
+#
+sleep 20
+#
+# Print out the passwords/accounts
+#
+echo "passwords and login for PartyA and PartyB:"
+echo ""
+grep "rpcUsers =" /opt/corda/samples-java/Basic/cordapp-example/build.gradle
