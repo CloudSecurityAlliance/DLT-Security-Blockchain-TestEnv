@@ -1,0 +1,37 @@
+    node {
+        name "O=PartyC,L=Los Angeles,C=US"
+        p2pPort 10011
+        rpcSettings {
+            address("localhost:10012")
+            adminAddress("localhost:10052")
+        }
+        rpcUsers = [[ user: "user1", "password": "test", "permissions": ["ALL"]]]
+    }
+    node {
+        name "O=PartyD,L=Edmonton,C=CA"
+        p2pPort 10014
+        rpcSettings {
+            address("localhost:10015")
+            adminAddress("localhost:10055")
+        }
+        rpcUsers = [[ user: "user1", "password": "test", "permissions": ["ALL"]]]
+    }
+    node {
+        name "O=PartyE,L=Seattle,C=US"
+        p2pPort 10017
+        rpcSettings {
+            address("localhost:10018")
+            adminAddress("localhost:10058")
+        }
+        rpcUsers = [[ user: "user1", "password": "test", "permissions": ["ALL"]]]
+    }
+    node {
+        name "O=PartyF,L=Vancouver,C=CA"
+        p2pPort 10020
+        rpcSettings {
+            address("localhost:10021")
+            adminAddress("localhost:10061")
+        }
+        rpcUsers = [[ user: "user1", "password": "test", "permissions": ["ALL"]]]
+    }
+}
