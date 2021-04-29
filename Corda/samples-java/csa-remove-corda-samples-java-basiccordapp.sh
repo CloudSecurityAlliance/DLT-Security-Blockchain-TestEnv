@@ -4,8 +4,8 @@
 # License: Apache 2.0
 #
 # You can get this script via
-# curl
-# chmod +x
+# curl https://raw.githubusercontent.com/cloudsecurityalliance/DLT-Security-Blockchain-TestEnv/master/Corda/samples-java/csa-remove-corda-samples-java-basiccordapp.sh > csa-remove-corda-samples-java-basiccordapp.sh
+# chmod +x csa-remove-corda-samples-java-basiccordapp.sh
 #
 echo "HIT CTRL-C NOW ID YOU DIDN'T MEAN TO RUN THIS"
 echo "5"
