@@ -79,6 +79,14 @@ git clone https://github.com/corda/samples-java
 cd /opt/corda/samples-java/Basic/cordapp-example
 sed 's/localhost/0.0.0.0/' build.gradle > 2 ; mv -f 2 build.gradle
 #
+# Add additional parties
+#
+# Remove the final "}"
+#
+tac build.gradle | sed "0,/}/s///"| tac > 2
+curl -fsSL https://raw.githubusercontent.com/cloudsecurityalliance/DLT-Security-Blockchain-TestEnv/master/Corda/samples-java/Basic/cordapp-example/build.gradle-4-m\
+ore-parties >> 2
+mv -f 2 build.gradle
 #
 # Set secure passwords:
 #
