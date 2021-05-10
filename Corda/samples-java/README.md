@@ -60,8 +60,10 @@ Test: N/A
 
 Install:
 run git bash
+```
 cd /c/corda/samples-java/Basic/cordapp-example/
 notepad.exe build.gradle
+```
 
 Go to the final line and remove the last "}" and then add the following to the file:
 
