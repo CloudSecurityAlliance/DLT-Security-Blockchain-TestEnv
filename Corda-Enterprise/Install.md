@@ -7,7 +7,7 @@ First decide what/how to install,
 https://docs.corda.net/docs/corda-enterprise/4.8/platform-support-matrix.html
 
 ## Production platform:
-Suggest Ubuntu 16.04 as easiest to get and supported by vendor
+Suggest Ubuntu 18.04 as easiest to get and supported by vendor
 
 ## Node databases:
 Suggest postgresql, Ubuntu 16.04 only has 9.5, will need to update that from Postgresql directly:
