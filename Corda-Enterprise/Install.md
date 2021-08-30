@@ -44,5 +44,25 @@ Which gets us zulu8 - Azul Zulu 8.56.0.21 (8u302-b08) JDK which should be close 
 ## pkitool.jar pki-tool.jar
 
 CENM-1.5.1.tar.gz
-repository/com/r3/enm/tools/pki-tool/1.5.1/
 
+```
+unzip CENM-1.5.1.tar.gz
+unzip repository/com/r3/enm/tools/pki-tool/1.5.1/pki-tool-1.5.1.zip
+```
+
+The ocnfig file with no CRL:
+
+```
+certificates = {
+    "::CORDA_TLS_CRL_SIGNER",
+    "::CORDA_ROOT",
+    "::CORDA_SUBORDINATE",
+    "::CORDA_IDENTITY_MANAGER",
+    "::CORDA_NETWORK_MAP"
+}
+```
+run the tool:
+
+```
+java -jar repository/com/r3/enm/tools/pki-tool/1.5.1/pkitool.jar --config-file pki-generation.conf --ignore-missing-crl
+```
