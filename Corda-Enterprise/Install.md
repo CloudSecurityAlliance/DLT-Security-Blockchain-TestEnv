@@ -46,11 +46,11 @@ Which gets us zulu8 - Azul Zulu 8.56.0.21 (8u302-b08) JDK which should be close 
 CENM-1.5.1.tar.gz
 
 ```
-unzip CENM-1.5.1.tar.gz
-unzip repository/com/r3/enm/tools/pki-tool/1.5.1/pki-tool-1.5.1.zip
+unzip ./CENM-1.5.1.tar.gz
+unzip ./repository/com/r3/enm/tools/pki-tool/1.5.1/pki-tool-1.5.1.zip
 ```
 
-The ocnfig file with no CRL:
+The config file with no CRL:
 
 ```
 certificates = {
@@ -66,3 +66,19 @@ run the tool:
 ```
 java -jar repository/com/r3/enm/tools/pki-tool/1.5.1/pkitool.jar --config-file pki-generation.conf --ignore-missing-crl
 ```
+
+## Identity Manager Service
+
+CENM-1.5.1.tar.gz
+
+```
+unzip ./CENM-1.5.1.tar.gz
+unzip ./repository/com/r3/enm/services/identitymanager/1.5.1/identitymanager-1.5.1.zip
+```
+
+
+```
+./repository/com/r3/enm/services/identitymanager/1.5.1/identitymanager.jar
+```
+
+see custom identity-manager.conf
