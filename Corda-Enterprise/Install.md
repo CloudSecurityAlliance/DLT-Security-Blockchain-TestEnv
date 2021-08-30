@@ -36,3 +36,11 @@ sudo apt-get update
 ```
 
 Which gets us zulu8 - Azul Zulu 8.56.0.21 (8u302-b08) JDK which should be close enough to Azul Zulu Enterprise 8u252
+
+# Components
+
+## pkitool.jar pki-tool.jar
+
+CENM-1.5.1.tar.gz
+repository/com/r3/enm/tools/pki-tool/1.5.1/
+
