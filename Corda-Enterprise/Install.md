@@ -10,14 +10,7 @@ https://docs.corda.net/docs/corda-enterprise/4.8/platform-support-matrix.html
 Suggest Ubuntu 18.04 as easiest to get and supported by vendor
 
 ## Node databases:
-Suggest postgresql, Ubuntu 16.04 only has 9.5, will need to update that from Postgresql directly:
-
-```
-sudo echo 'deb http://apt.postgresql.org/pub/repos/apt/ xenial-pgdg main' >> /etc/apt/sources.list.d/pgdg.list
-sudo wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
-sudo apt-get update
-```
-This gives us access to postgresql-9.6
+Suggest postgresql, Ubuntu 18.04  has 10
 
 ## JDK:
 https://docs.corda.net/docs/corda-enterprise/4.8/platform-support-matrix.html
