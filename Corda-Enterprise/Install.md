@@ -8,6 +8,8 @@ crl-files.csatestdomain.com
 
 as per https://docs.corda.net/docs/cenm/1.5/quick-start.html
 
+NO REDIRECT OF HTTP TO HTTPS. INSECURE ONLY as per the documentatione examples.
+
 # Requirements
 
 https://docs.corda.net/docs/corda-enterprise/4.8/platform-support-matrix.html
