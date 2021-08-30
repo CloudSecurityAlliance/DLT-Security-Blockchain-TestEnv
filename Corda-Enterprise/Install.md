@@ -2,6 +2,12 @@
 
 First decide what/how to install, 
 
+# CRL Host
+
+crl-files.csatestdomain.com
+
+as per https://docs.corda.net/docs/cenm/1.5/quick-start.html
+
 # Requirements
 
 https://docs.corda.net/docs/corda-enterprise/4.8/platform-support-matrix.html
