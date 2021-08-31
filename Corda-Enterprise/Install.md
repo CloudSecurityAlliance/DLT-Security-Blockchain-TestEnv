@@ -128,3 +128,6 @@ workflows {
 
 ```
 
+# TODO:
+
+Certificate revocation bits - requires host with public DNS/HTTP server
