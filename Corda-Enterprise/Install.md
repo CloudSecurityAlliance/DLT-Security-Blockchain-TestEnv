@@ -86,44 +86,44 @@ see custom identity-manager.conf:
 ```
 address = "localhost:10000" 
 database { 
-driverClassName = org.h2.Driver 
-url = "jdbc:h2:file:./identity-manager-persistence;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=10000;WRITE_DELAY=0;AUTO_SERVER_PORT=0" 
-user = "example-db-user" 
-password = "example-db-password" 
-# Database migration is probably needed
-runMigration = true 
+    driverClassName = org.h2.Driver 
+    url = "jdbc:h2:file:./identity-manager-persistence;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=10000;WRITE_DELAY=0;AUTO_SERVER_PORT=0" 
+    user = "example-db-user" 
+    password = "example-db-password" 
+    # Database migration is probably needed
+    runMigration = true
 } 
 
 shell { 
-sshdPort = 10002 
-user = "testuser" 
-password = "password" 
+    sshdPort = 10002 
+    user = "testuser" 
+    password = "password" 
 } 
 
 localSigner { 
-keyStore { 
-file = key-stores/corda-identity-manager-keys.jks 
-password = "password" 
-} 
-keyAlias = "cordaidentitymanagerca" 
-signInterval = 10000 
-# This CRL parameter is not strictly needed. However if it is omitted, then revocation cannot be used in the future so it makes sense to leave it in. 
-#crlDistributionUrl = "http://"${address}"/certificate-revocation-list/doorman" 
+    keyStore { 
+        file = key-stores/corda-identity-manager-keys.jks 
+        password = "password" 
+    } 
+    keyAlias = "cordaidentitymanagerca" 
+    signInterval = 10000 
+    # This CRL parameter is not strictly needed. However if it is omitted, then revocation cannot be used in the future so it makes sense to leave it in. 
+    #crlDistributionUrl = "http://"${address}"/certificate-revocation-list/doorman" 
 } 
 
 workflows { 
-"issuance" { 
-type = ISSUANCE 
-# add enmListener port to avoid error
-enmListener { 
-port = 10001 
-reconnect = true 
-} 
-updateInterval = 10000 
-plugin { 
-pluginClass = "com.r3.enmplugins.approveall.ApproveAll" 
-} 
-} 
+    "issuance" { 
+        type = ISSUANCE 
+        # add enmListener port to avoid error
+        enmListener { 
+            port = 10001 
+            reconnect = true 
+        } 
+        updateInterval = 10000 
+        plugin { 
+            pluginClass = "com.r3.enmplugins.approveall.ApproveAll" 
+        } 
+    } 
 } 
 
 ```
