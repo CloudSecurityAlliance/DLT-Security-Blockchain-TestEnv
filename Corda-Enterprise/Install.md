@@ -152,7 +152,7 @@ so add "serviceLegalName" to the notary stanza
 myLegalName="O=NotaryA,L=London,C=GB"
 notary {
     validating=false
-    serviceLegalName: "O=HA Notary, C=GB, L=London"
+    serviceLegalName="O=HA Notary, C=GB, L=London"
 }
 
 networkServices {
