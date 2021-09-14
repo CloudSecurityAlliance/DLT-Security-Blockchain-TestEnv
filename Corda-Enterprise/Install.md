@@ -140,10 +140,19 @@ tar -xf corda-4.8-full-release.tar.gz
 
 ## node.conf
 
+So https://medium.com/@TIS_BC_Prom/corda-notary-cluster%E3%81%AE%E6%A7%8B%E7%AF%89%E6%96%B9%E6%B3%95%E3%81%A8%E3%81%9D%E3%81%AE%E9%AB%98%E5%8F%AF%E7%94%A8%E6%80%A7-ha-%E3%81%AE%E6%A4%9C%E8%A8%BC-3c049cffd92b had a hint
+
+```
+[ERROR] 16:27:47+0000 [main] internal.NodeStartupLogging. - Exception during node registration: The notary service legal name must be provided via the 'notary.serviceLegalName' configuration parameter                [ERROR] 16:27:47+0000 [main] internal.NodeStartupLogging. - Exception during node startup: The notary service legal name must be provided via the 'notary.serviceLegalName' configuration parameter 
+```
+
+so add "serviceLegalName" to the notary stanza
+
 ```
 myLegalName="O=NotaryA,L=London,C=GB"
 notary {
     validating=false
+    serviceLegalName: "O=HA Notary, C=GB, L=London"
 }
 
 networkServices {
