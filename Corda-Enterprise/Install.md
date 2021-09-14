@@ -35,22 +35,23 @@ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 0xB199836
 curl -O https://cdn.azul.com/zulu/bin/zulu-repo_1.0.0-2_all.deb
 sudo apt-get install ./zulu-repo_1.0.0-2_all.deb
 sudo apt-get update
+sudo apt-get upgrade
 ```
 
 Which gets us zulu8 - Azul Zulu 8.56.0.21 (8u302-b08) JDK which should be close enough to Azul Zulu Enterprise 8u252
 
-# Components
+# CENM setup
 
 ## pkitool.jar pki-tool.jar
 
 CENM-1.5.1.tar.gz
 
 ```
-unzip ./CENM-1.5.1.tar.gz
+tar -xf ./CENM-1.5.1.tar.gz
 unzip ./repository/com/r3/enm/tools/pki-tool/1.5.1/pki-tool-1.5.1.zip
 ```
 
-The config file with no CRL:
+The config file with no CRL "pki-generation.conf":
 
 ```
 certificates = {
@@ -64,7 +65,7 @@ certificates = {
 run the tool:
 
 ```
-java -jar repository/com/r3/enm/tools/pki-tool/1.5.1/pkitool.jar --config-file pki-generation.conf --ignore-missing-crl
+java -jar ./pkitool.jar --config-file pki-generation.conf --ignore-missing-crl
 ```
 
 ## Identity Manager Service
@@ -72,16 +73,11 @@ java -jar repository/com/r3/enm/tools/pki-tool/1.5.1/pkitool.jar --config-file p
 CENM-1.5.1.tar.gz
 
 ```
-unzip ./CENM-1.5.1.tar.gz
+tar -xf ./CENM-1.5.1.tar.gz
 unzip ./repository/com/r3/enm/services/identitymanager/1.5.1/identitymanager-1.5.1.zip
 ```
 
-
-```
-./repository/com/r3/enm/services/identitymanager/1.5.1/identitymanager.jar
-```
-
-see custom identity-manager.conf:
+Create custom identity-manager.conf:
 
 ```
 address = "localhost:10000" 
@@ -127,6 +123,69 @@ workflows {
 } 
 
 ```
+
+Run it
+
+```
+java -jar identitymanager.jar --config-file identity-manager.conf
+```
+
+This gets us the trust-stores/network-root-truststore.jks
+
+# CORDA
+
+```
+tar -xf corda-4.8-full-release.tar.gz
+```
+
+## node.conf
+
+```
+myLegalName="O=NotaryA,L=London,C=GB"
+notary {
+    validating=false
+}
+
+networkServices {
+  doormanURL="http://localhost:10000"
+  networkMapURL="http://localhost:81"
+}
+
+devMode = false
+
+sshd {
+  port = 2222
+}
+
+p2pAddress="localhost:30000"
+rpcUsers=[
+  {
+    user=testuser
+    password=password
+    permissions=[
+        ALL
+    ]
+  }
+]
+
+rpcSettings {
+  address = "localhost:30001"
+  adminAddress = "localhost:30002"
+}
+```
+
+## trust-stores/network-root-truststore.jks
+
+Copy this to the local directory
+
+## Running Corda:
+
+then try running it:
+
+```
+java -jar ./repository/com/r3/corda/corda/4.8/corda-4.8.jar --initial-registration --network-root-truststore-password trustpass --network-root-truststore network-root-truststore.jks
+```
+
 
 # TODO:
 
