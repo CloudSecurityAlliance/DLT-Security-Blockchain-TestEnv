@@ -26,7 +26,7 @@ fi
 # /opt/corda/ (2 gigs)
 #
 echo "Making directory /opt/corda-enterprise"
-sudo mkdir /opt/corda-enterprise
+sudo mkdir -P /opt/corda-enterprise/
 #
 DIR_CORDA=`df -m /opt/corda-enterprise/ --output=avail | grep "[0-9]"`
 
@@ -55,7 +55,7 @@ sudo apt-get upgrade
 #
 # Unpack CENM
 #
-sudo mkdir /opt/corda-enterprise/CENM/
+sudo mkdir -p /opt/corda-enterprise/CENM/
 tar -xvf CENM-1.5.1.tar.gz -C /opt/corda-enterprise/CENM/
 
 #
