@@ -62,7 +62,7 @@ tar -xvf CENM-1.5.1.tar.gz -C /opt/corda-enterprise/CENM/
 # Unpack CENM PKI tools
 #
 cd /opt/corda-enterprise/CENM/
-unzip ./repository/com/r3/enm/tools/pki-tool/1.5.1/pki-tool-1.5.1.zip
+unzip -o ./repository/com/r3/enm/tools/pki-tool/1.5.1/pki-tool-1.5.1.zip
 
 #
 # Create pki-generation.conf
@@ -88,7 +88,7 @@ java -jar ./pkitool.jar --config-file pki-generation.conf --ignore-missing-crl
 #
 
 cd /opt/corda-enterprise/CENM/
-unzip ./repository/com/r3/enm/services/identitymanager/1.5.1/identitymanager-1.5.1.zip
+unzip -o ./repository/com/r3/enm/services/identitymanager/1.5.1/identitymanager-1.5.1.zip
 
 #
 # Create identity-manager.conf
