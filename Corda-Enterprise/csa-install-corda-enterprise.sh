@@ -52,5 +52,97 @@ sudo apt-get install ./zulu-repo_1.0.0-2_all.deb
 sudo apt-get update
 sudo apt-get upgrade
 
+#
+# Unpack CENM
+#
+sudo mkdir /opt/corda-enterprise/CENM/
+tar -xvf CENM-1.5.1.tar.gz -C /opt/corda-enterprise/CENM/
+
+#
+# Unpack CENM PKI tools
+#
+cd /opt/corda-enterprise/CENM/
+$FILE_PKITOOLS=./repository/com/r3/enm/tools/pki-tool/1.5.1/pki-tool-1.5.1.zip
+unzip $FILE_PKITOOLS=
+
+#
+# Create pki-generation.conf
+#
+
+cat << 'EOF' >> /opt/corda-enterprise/CENM/pki-generation.conf
+certificates = {
+    "::CORDA_TLS_CRL_SIGNER",
+    "::CORDA_ROOT",
+    "::CORDA_SUBORDINATE",
+    "::CORDA_IDENTITY_MANAGER",
+    "::CORDA_NETWORK_MAP"
+}
+EOF
+
+#
+# Run the tool, no CRL support
+#
+java -jar ./pkitool.jar --config-file pki-generation.conf --ignore-missing-crl
+
+#
+# Unpack CENM Identity manager
+#
+
+cd /opt/corda-enterprise/CENM/
+$FILE_IDENTITYMANAGER=./repository/com/r3/enm/services/identitymanager/1.5.1/identitymanager-1.5.1.zip
+unzip $FILE_IDENTITYMANAGER
+
+#
+# Create identity-manager.conf
+#
+
+cat << 'EOF' >> /opt/corda-enterprise/CENM/identity-manager.conf
+address = "localhost:10000" 
+database { 
+    driverClassName = org.h2.Driver 
+    url = "jdbc:h2:file:./identity-manager-persistence;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=10000;WRITE_DELAY=0;AUTO_SERVER_PORT=0" 
+    user = "example-db-user" 
+    password = "example-db-password" 
+    # Database migration is probably needed
+    runMigration = true
+} 
+
+shell { 
+    sshdPort = 10002 
+    user = "testuser" 
+    password = "password" 
+} 
+
+localSigner { 
+    keyStore { 
+        file = key-stores/corda-identity-manager-keys.jks 
+        password = "password" 
+    } 
+    keyAlias = "cordaidentitymanagerca" 
+    signInterval = 10000 
+    # This CRL parameter is not strictly needed. However if it is omitted, then revocation cannot be used in the future so it makes sense to leave it in. 
+    #crlDistributionUrl = "http://"${address}"/certificate-revocation-list/doorman" 
+} 
+
+workflows { 
+    "issuance" { 
+        type = ISSUANCE 
+        # add enmListener port to avoid error
+        enmListener { 
+            port = 10001 
+            reconnect = true 
+        } 
+        updateInterval = 10000 
+        plugin { 
+            pluginClass = "com.r3.enmplugins.approveall.ApproveAll" 
+        } 
+    } 
+} 
+EOF
+
+#
+# Run the identity manager
+#
+java -jar identitymanager.jar --config-file identity-manager.conf
 
 
