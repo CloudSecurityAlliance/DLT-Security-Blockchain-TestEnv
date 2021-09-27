@@ -4,8 +4,8 @@
 # License: Apache 2.0
 #
 # You can get this script via
-# curl https://raw.githubusercontent.com/cloudsecurityalliance/DLT-Security-Blockchain-TestEnv/master/Corda-Enterprise/csa-install-corda-enterprise.sh > csa-install-corda-enterprise.sh
-# chmod +x csa-install-corda-enterprise.sh
+# curl https://raw.githubusercontent.com/cloudsecurityalliance/DLT-Security-Blockchain-TestEnv/master/Corda-Enterprise/csa-install-corda-enterprise-CENM.sh > csa-install-corda-enterprise-CENM.sh
+# chmod +x csa-install-corda-enterprise-CENM.sh
 #
 # Runs most stuff as root, it's for testing. I know it's a bad habit.
 #
