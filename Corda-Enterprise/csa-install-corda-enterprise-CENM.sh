@@ -22,6 +22,13 @@ else
 fi
 
 #
+# Disable IPv6 or else the java stuff just binds to it by default, no IPv4.
+#
+#/etc/sysctl.conf
+#net.ipv6.conf.all.disable_ipv6=1
+#net.ipv6.conf.default.disable_ipv6=1
+
+#
 # Check for free disk space
 # /opt/corda/ (2 gigs)
 #
