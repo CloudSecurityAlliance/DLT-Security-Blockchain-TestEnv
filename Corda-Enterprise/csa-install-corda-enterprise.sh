@@ -7,7 +7,7 @@
 # curl https://raw.githubusercontent.com/cloudsecurityalliance/DLT-Security-Blockchain-TestEnv/master/Corda-Enterprise/csa-install-corda-enterprise.sh > csa-install-corda-enterprise.sh
 # chmod +x csa-install-corda-enterprise.sh
 #
-# Runs as root, it's for testing. I know it's a bad habit.
+# Runs most stuff as root, it's for testing. I know it's a bad habit.
 #
 # Check for Ubuntu 18.04
 #
@@ -26,7 +26,7 @@ fi
 # /opt/corda/ (2 gigs)
 #
 echo "Making directory /opt/corda-enterprise"
-mkdir /opt/corda-enterprise
+sudo mkdir /opt/corda-enterprise
 #
 DIR_CORDA=`df -m /opt/corda-enterprise/ --output=avail | grep "[0-9]"`
 
@@ -39,6 +39,18 @@ fi
 #
 # Update the system
 #
-apt-get update
-apt-get -y --with-new-pkgs upgrade
+sudo apt-get update
+sudo apt-get -y --with-new-pkgs upgrade
+
+# Java
+# Suggest we use Azul systems as easiest to download:
+# https://docs.azul.com/core/zulu-openjdk/install/debian
+#
+sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 0xB1998361219BD9C9
+curl -O https://cdn.azul.com/zulu/bin/zulu-repo_1.0.0-2_all.deb
+sudo apt-get install ./zulu-repo_1.0.0-2_all.deb
+sudo apt-get update
+sudo apt-get upgrade
+
+
 
