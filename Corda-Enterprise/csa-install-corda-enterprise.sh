@@ -63,7 +63,7 @@ tar -xvf CENM-1.5.1.tar.gz -C /opt/corda-enterprise/CENM/
 #
 cd /opt/corda-enterprise/CENM/
 $FILE_PKITOOLS=./repository/com/r3/enm/tools/pki-tool/1.5.1/pki-tool-1.5.1.zip
-unzip $FILE_PKITOOLS=
+unzip $FILE_PKITOOLS
 
 #
 # Create pki-generation.conf
