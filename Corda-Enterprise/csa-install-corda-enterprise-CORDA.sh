@@ -114,5 +114,7 @@ cp /opt/corda-enterprise/CENM/trust-stores/network-root-truststore.jks /opt/cord
 #
 # Run the tool, no CRL support
 #
+# TODO: ! ATTENTION: The --initial-registration flag has been deprecated and will be removed in a future version. Use the initial-registration command instead. 
+#
 cd /opt/corda-enterprise/CORDA/
 java -jar ./repository/com/r3/corda/corda/4.8/corda-4.8.jar --initial-registration --network-root-truststore-password trustpass --network-root-truststore network-root-truststore.jks
