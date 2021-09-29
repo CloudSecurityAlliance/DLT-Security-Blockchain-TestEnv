@@ -118,3 +118,81 @@ cp /opt/corda-enterprise/CENM/trust-stores/network-root-truststore.jks /opt/cord
 #
 cd /opt/corda-enterprise/CORDA/
 java -jar ./repository/com/r3/corda/corda/4.8/corda-4.8.jar --initial-registration --network-root-truststore-password trustpass --network-root-truststore network-root-truststore.jks
+
+#
+# Create network-parameters.conf for CENM
+#
+cd /opt/corda-enterprise/CENM/
+unzip -o ./repository/com/r3/enm/services/networkmap/1.5.1/networkmap-1.5.1.zip
+cp ./trust-stores/network-root-truststore.jks ./network-root-truststore.jks
+cp ./key-stores/corda-network-map-keys.jks ./corda-network-map-keys.jks
+
+#
+# Create network-map.conf for CENM
+#
+
+
+
+cat << 'EOF' >> /opt/corda-enterprise/CENM/network-map.conf
+address = "localhost:20000"
+
+database {
+    driverClassName = org.h2.Driver
+    url = "jdbc:h2:file:./network-map-persistence;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=10000;WRITE_DELAY=0;AUTO_SERVER_PORT=0"
+    user = "example-db-user"
+    password = "example-db-password"
+    runMigration = true
+}
+
+shell {
+    sshdPort = 10002
+    user = "testuser"
+    password = "password"
+}
+
+localSigner {
+    keyStore {
+        file = corda-network-map-keys.jks
+        password = "password"
+    }
+    keyAlias = "cordanetworkmap"
+    signInterval = 10000
+}
+
+pollingInterval = 10000
+checkRevocation = false
+EOF
+
+#
+# ERROR NOTES:
+#
+# Error while executing Network Map command.
+# Network Map database configuration error: com.r3.cordacrossports.OutstandingDatabaseChangesException: Incompatible database schema version detected. Please run the service with database.runMigration=true. Reason: There are 35 outstanding database changes that need to be run.
+# Please consult Network Map documentation.
+#
+# Add:
+# database.runMigration = true
+# to the database stanza
+
+#
+# Create network-parameters.conf for CENM
+#
+
+cat << 'EOF' >> /opt/corda-enterprise/CENM/network-parameters.conf
+notaries : [
+  {
+    notaryNodeInfoFile: network-root-truststore.jks
+    validating: false
+  }
+]
+minimumPlatformVersion = 3
+maxMessageSize = 10485760
+maxTransactionSize = 10485760
+eventHorizonDays = 30
+EOF
+
+#
+#
+#
+java -jar networkmap.jar --config-file network-map.conf --set-network-parameters network-parameters.conf --network-truststore network-root-truststore.jks --truststore-password trustpass --root-alias cordarootca
+
