@@ -152,4 +152,11 @@ EOF
 #
 java -jar identitymanager.jar --config-file identity-manager.conf
 
+#
+# How to SSH in
+#
+echo ""
+echo "you can now SSH in:"
+echo "ssh testuser@localhost -p 10002"
+echo "password is password"
 
