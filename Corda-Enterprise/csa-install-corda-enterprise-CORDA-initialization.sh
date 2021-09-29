@@ -192,7 +192,13 @@ eventHorizonDays = 30
 EOF
 
 #
-#
+# Run the network command
 #
 java -jar networkmap.jar --config-file network-map.conf --set-network-parameters network-parameters.conf --network-truststore network-root-truststore.jks --truststore-password trustpass --root-alias cordarootca
 
+#
+# Which creates the error:
+#
+# Error while executing Network Map command
+# Unexpected Error: Serialization scheme ([FEEDFEED000000], P2P) not supported.
+# Full information can be found in log file
