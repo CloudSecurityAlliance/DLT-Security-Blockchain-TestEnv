@@ -202,3 +202,5 @@ java -jar networkmap.jar --config-file network-map.conf --set-network-parameters
 # Error while executing Network Map command
 # Unexpected Error: Serialization scheme ([FEEDFEED000000], P2P) not supported.
 # Full information can be found in log file
+#
+# This appears to be duue to the lack of a cordapp on the notary. 
