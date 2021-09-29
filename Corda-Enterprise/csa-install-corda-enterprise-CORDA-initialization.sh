@@ -145,7 +145,7 @@ database {
 }
 
 shell {
-    sshdPort = 10002
+    sshdPort = 20002
     user = "testuser"
     password = "password"
 }
