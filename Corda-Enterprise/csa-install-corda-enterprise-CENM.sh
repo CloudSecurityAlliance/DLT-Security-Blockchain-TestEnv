@@ -9,6 +9,11 @@
 #
 # Runs most stuff as root, it's for testing. I know it's a bad habit.
 #
+# Resources:
+# https://docs.r3.com/en/platform/corda/1.5/cenm/quick-start.html
+# https://docs.corda.net/docs/cenm/1.5/quick-start.html
+#
+#
 # Check for Ubuntu 18.04
 #
 
