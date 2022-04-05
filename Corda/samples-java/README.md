@@ -19,7 +19,22 @@ https://gitforwindows.org/
 
 Install is simple, download and run installer
 
-Test: run git bash
+Test: run git and bash
+
+```
+$ git --version
+git version 2.35.1.windows.2
+```
+
+```
+$ bash --version
+GNU bash, version 5.0.17(1)-release (x86_64-pc-linux-gnu)
+Copyright (C) 2019 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+
+This is free software; you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+```
 
 ## Java OpenJDK 1.8.0 - Red Hat login required
 
@@ -27,7 +42,14 @@ https://developers.redhat.com/products/openjdk/download
 
 Install the MSI (e.g. jdk-8u322-x64 MSI OpenJDK 8 Windows 64-bit)
 
-Test: ```java -version```
+Test: 
+
+```
+$ java -version
+openjdk version "1.8.0_322"
+OpenJDK Runtime Environment (build 1.8.0_322-b06)
+OpenJDK 64-Bit Server VM (build 25.322-b06, mixed mode)
+```
 
 ## Gradle install 5.6.4 IMPORTANT (anything other than 5.6.4 and it won't work)
 
@@ -42,7 +64,24 @@ C:\gradle\gradle-5.6.4-bin\grade-5.6.4\bin
 
 This is done by going to computer settings, "View advanced system settings", click on the "Advanced" tab if it isn't already at the front, then click "Environment Variables" at the bottom right. You can set the path for either your user only (top half) or all users (bottom half), either way choose "Path" and click "Edit", in the new screen select "New" and either cut and paste the directory above or use "Browse" to find it. Click "Ok" to save. You do not need to log out/back in for it to take effect.
 
-Test: ```gradle -v```
+Test: 
+
+```
+$ gradle -v
+
+------------------------------------------------------------
+Gradle 5.6.4
+------------------------------------------------------------
+
+Build time:   2019-11-01 20:42:00 UTC
+Revision:     dd870424f9bd8e195d614dc14bb140f43c22da98
+
+Kotlin:       1.3.41
+Groovy:       2.5.4
+Ant:          Apache Ant(TM) version 1.9.14 compiled on March 12 2019
+JVM:          1.8.0_322 (Red Hat, Inc. 25.322-b06)
+OS:           Windows 10 10.0 amd64
+```
 
 
 ## Corda samples-java
