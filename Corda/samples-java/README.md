@@ -17,14 +17,16 @@ This will put Corda in C:\Corda and Gradle in C:\Gradle
 ## Git Bash
 https://gitforwindows.org/
 
-Install
+Install is simple, download and run installer
+
 Test: run git bash
 
 ## Java OpenJDK 1.8.0 - Red Hat login required
 
 https://developers.redhat.com/products/openjdk/download
 
-Install the MSI
+Install the MSI (e.g. jdk-8u322-x64 MSI OpenJDK 8 Windows 64-bit)
+
 Test: ```java -version```
 
 ## Gradle install 5.6.4 IMPORTANT (anything other than 5.6.4 and it won't work)
