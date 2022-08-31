@@ -14,8 +14,8 @@
 
 PRETTY_NAME=`grep PRETTY_NAME /etc/os-release`
 
-if [[ $PRETTY_NAME =~ "PRETTY_NAME=\"Ubuntu 18.04.5 LTS\"" ]]; then
-    echo "Ubuntu detected 18.04, continuing"
+if [[ $PRETTY_NAME =~ "PRETTY_NAME=\"Ubuntu 20.04.4 LTS\"" ]]; then
+    echo "Ubuntu detected 20.04, continuing"
 else
     echo "This only works reliably on Ubuntu. You can manually edit this check to bypass it (for e.g. Debian)."
     exit
